@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 420" width="1060" height="420" role="img" aria-label="小步 · 说出来，就有人替你记住">
+  <title>小步 · 横式组合</title>
+  <!-- 图形标 -->
+  <g transform="translate(30 80)">
+    <rect width="260" height="260" rx="59" fill="#D2613E"/>
+    <path d="M288 550 L428 690 L740 340" fill="none" stroke="#FFFBF2" stroke-width="112"
+          stroke-linecap="round" stroke-linejoin="round" transform="scale(0.2539)"/>
+  </g>
+  <!-- 字标 -->
+  <text x="336" y="268" font-family="Noto Sans SC, Source Han Sans SC, Microsoft YaHei, sans-serif"
+        font-size="190" font-weight="800" letter-spacing="19" fill="#23201C">小步</text>
+  <text x="340" y="330" font-family="Noto Sans SC, Source Han Sans SC, Microsoft YaHei, sans-serif"
+        font-size="34" letter-spacing="2" fill="#948A7A">说出来，就有人替你记住</text>
+</svg>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: 'Noto Serif SC'; src: local('Noto Serif SC'), local('Source Han Serif SC'), local('Songti SC'), local('SimSun'); }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #F6F1E8;
+    font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+    color: #23201C;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    padding: 64px 64px 56px;
+    gap: 24px;
+    position: relative;
+  }
+  body::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(60% 50% at 88% 12%, rgba(210,97,62,.13), transparent 70%),
+      radial-gradient(50% 60% at 8% 96%, rgba(47,93,80,.09), transparent 70%);
+  }
+  .left { position: relative; display: flex; flex-direction: column; }
+  .brand { display: flex; align-items: center; gap: 14px; font-size: 22px; letter-spacing: .06em; color: #6E6660; }
+  .brand img { width: 52px; height: 52px; border-radius: 14px; }
+  .kicker { margin-top: 54px; font-size: 21px; letter-spacing: .18em; color: #B94F2E; }
+  h1 {
+    font-family: 'Noto Serif SC', 'Songti SC', serif;
+    font-weight: 800; font-size: 82px; line-height: 1.18; margin-top: 18px; letter-spacing: .02em;
+  }
+  h1 em { font-style: normal; color: #B94F2E; }
+  .sub { margin-top: auto; font-size: 25px; line-height: 1.7; color: #4A443D; }
+  .meta { margin-top: 18px; font-size: 19px; letter-spacing: .08em; color: #8C837A; }
+  .right { position: relative; display: flex; align-items: center; justify-content: center; }
+  .phone {
+    width: 300px; height: 520px; border-radius: 40px; background: #FFFDF8;
+    border: 1px solid rgba(35,32,28,.12);
+    box-shadow: 0 40px 80px -40px rgba(35,32,28,.5);
+    padding: 22px 20px; overflow: hidden; position: relative;
+  }
+  .ptop { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #8C837A; }
+  .pill { background: #2F5D50; color: #fff; border-radius: 999px; padding: 3px 11px; font-size: 12px; }
+  .phead { font-size: 26px; font-weight: 700; margin-top: 14px; }
+  .pdate { font-size: 12px; color: #8C837A; margin-top: 3px; }
+  .pline { margin-top: 16px; font-size: 13px; color: #4A443D; }
+  .card {
+    margin-top: 12px; background: #fff; border: 1.5px solid rgba(210,97,62,.5);
+    border-radius: 18px; padding: 15px 14px;
+  }
+  .card b { font-size: 17px; }
+  .chips { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .chips span { font-size: 11px; padding: 3px 8px; border-radius: 999px; background: #F0EAE0; color: #4A443D; }
+  .chips .imp { background: #F7E3DB; color: #B94F2E; }
+  .start { margin-top: 12px; background: #2F5D50; color: #fff; border-radius: 10px; text-align: center; padding: 9px; font-size: 14px; }
+  .inp {
+    margin-top: 14px; border: 1px solid rgba(35,32,28,.14); background: #fff; border-radius: 999px;
+    padding: 11px 14px; font-size: 12px; color: #6E6660;
+  }
+  .mascot { position: absolute; right: -46px; bottom: -18px; width: 210px; filter: drop-shadow(0 18px 26px rgba(35,32,28,.18)); }
+</style>
+</head>
+<body>
+  <div class="left">
+    <div class="brand"><img src="assets/icon-180.png" alt=""> 轻记 · 小步</div>
+    <div class="kicker">语音待办助手</div>
+    <h1>说出来，<br>就有人替你<em>记住</em>。</h1>
+    <div class="sub">你的待办清单，正在变成一本不敢打开的账。<br>小步只挑出「现在这一件」——先让你动起来，再谈计划。</div>
+    <div class="meta">2026.11 · 一个人 · 5 天 · 37 个版本 · 12 条真实反馈</div>
+  </div>
+  <div class="right">
+    <div class="phone">
+      <div class="ptop"><span>15:00</span><span class="pill">1 / 3</span></div>
+      <div class="phead">下午好</div>
+      <div class="pdate">11月18日 · 星期二</div>
+      <div class="pline">● 还有 3 件事，先做这一件</div>
+      <div class="card">
+        <b>给导师发开题报告</b>
+        <div class="chips"><span>明天 15:00</span><span>90 分钟</span><span class="imp">重要</span></div>
+        <div class="start">开始 5 分钟</div>
+      </div>
+      <div class="inp">明天下午三点提醒我…</div>
+    </div>
+    <img class="mascot" src="assets/mascot-front.png" alt="">
+  </div>
+</body>
+</html>

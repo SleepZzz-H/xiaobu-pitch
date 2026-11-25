@@ -9,6 +9,9 @@
   /* ───────── 章节点 + 页码 ───────── */
   const rail = $('#rail');
   slides.forEach((s, i) => {
+    // 页码自动同步（插页后不用手改 "04　发现 01" 里的数字）
+    const k = s.querySelector('.kicker');
+    if (k) k.innerHTML = k.innerHTML.replace(/^\s*\d{2}/, String(i + 1).padStart(2, '0'));
     const a = document.createElement('a');
     a.href = '#' + s.id;
     a.innerHTML = `<span>${s.dataset.title || i + 1}</span><i></i>`;

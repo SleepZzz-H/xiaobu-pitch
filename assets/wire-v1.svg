@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 540" width="300" height="540" role="img" aria-label="第一版线框图：首页是一个比赛信息聚合列表，底部是「一键收集比赛信息」">
-  <g fill="none" stroke="#23201C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".78">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 540" width="300" height="540" role="img" aria-label="第一版线框图：整页是一个比赛信息列表，底部是「一键收集比赛信息」大按钮">
+  <g fill="none" stroke="#23201C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".8">
     <rect x="8" y="8" width="284" height="524" rx="38"/>
-    <path d="M28 42h24M28 54h24M28 66h24"/>
-    <rect x="186" y="32" width="88" height="28" rx="14"/>
-    <text x="230" y="51" font-family="Noto Sans SC, sans-serif" font-size="15" fill="#23201C" stroke="none" text-anchor="middle" opacity=".8">校园比赛</text>
-    <g stroke="#2F5D50">
+    <path d="M28 42h26M28 54h26M28 66h26"/>
+    <rect x="182" y="30" width="94" height="30" rx="15"/>
+    <text x="229" y="50" font-family="Noto Sans SC, sans-serif" font-size="17" fill="#23201C" stroke="none" text-anchor="middle" opacity=".82">校园比赛</text>
+    <g stroke="#2F5D50" opacity=".9">
       <rect x="28" y="86" width="72" height="28" rx="14"/>
       <rect x="108" y="86" width="72" height="28" rx="14"/>
       <rect x="188" y="86" width="86" height="28" rx="14"/>
     </g>
-    <g opacity=".6">
+    <g opacity=".55">
       <rect x="28" y="134" width="246" height="46" rx="12"/>
       <rect x="28" y="192" width="246" height="46" rx="12"/>
       <rect x="28" y="250" width="246" height="46" rx="12"/>
@@ -20,14 +20,14 @@
       <circle cx="46" cy="157" r="7"/><circle cx="46" cy="215" r="7"/><circle cx="46" cy="273" r="7"/><circle cx="46" cy="331" r="7"/><circle cx="46" cy="389" r="7"/>
       <path d="M66 150h140M66 165h86M66 208h150M66 223h72M66 266h126M66 281h96M66 324h142M66 339h80M66 382h132M66 397h92"/>
     </g>
-    <rect x="28" y="434" width="246" height="54" rx="27" fill="#D2613E" stroke="#D2613E"/>
-    <text x="151" y="468" font-family="Noto Sans SC, sans-serif" font-size="20" fill="#FFFBF2" stroke="none" text-anchor="middle" font-weight="600">一键收集比赛信息</text>
+    <rect x="28" y="432" width="246" height="56" rx="28" fill="#D2613E" stroke="#D2613E"/>
+    <text x="151" y="467" font-family="Noto Sans SC, sans-serif" font-size="22" fill="#FFFBF2" stroke="none" text-anchor="middle" font-weight="600">一键收集比赛信息</text>
     <g stroke-width="3" opacity=".45">
-      <path d="M150 498v14M143 505h14"/>
+      <path d="M150 500v14M143 507h14"/>
       <circle cx="70" cy="512" r="7"/><circle cx="120" cy="512" r="7"/><circle cx="180" cy="512" r="7"/><circle cx="230" cy="512" r="7"/>
     </g>
   </g>
-  <g stroke="#D2613E" stroke-width="8" stroke-linecap="round" opacity=".85">
+  <g stroke="#D2613E" stroke-width="8" stroke-linecap="round" opacity=".82">
     <path d="M44 146 L258 412"/>
     <path d="M258 146 L44 412"/>
   </g>

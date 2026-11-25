@@ -654,3 +654,9 @@ body{font-size:clamp(20px,1.06vw,27px);line-height:1.78}
 .lead.tight{font-size:clamp(19px,1.1vw,26px)}
 .slide h2{font-size:clamp(42px,4.15vw,88px);line-height:1.18}
 .slide h3{font-size:clamp(18px,1.05vw,24px)}
+
+/* s03b 线框图最终尺寸：手机按 1:1 渲染，图内文字不再被缩小 */
+#s03b .wire img{height:min(60vh,600px);width:auto}
+#s03b .wire-arrow{margin-top:calc(min(60vh,600px)/2 - 4px)}
+#s03b .wire figcaption{font-size:clamp(14px,.86vw,18px);letter-spacing:.02em;margin-bottom:10px}
+#s03b .wn{font-size:clamp(14px,.86vw,18px);margin-top:10px}

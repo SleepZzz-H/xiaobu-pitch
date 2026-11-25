@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -115,11 +115,9 @@
       <div class="col">
         <p class="lead reveal">比赛信息散在群里、公众号里、食堂门口的海报上。我们想做一个聚合器——一个页面看完全部比赛，这几乎就是这个项目最初的全部想法。</p>
 
-        <div class="scene reveal">
-          <span class="scene-tag">同一周 · 我妈发来的两条微信</span>
-          <p class="scene-msg">明天提醒我去医院。</p>
-          <p class="scene-msg">记得提醒我交电费。</p>
-          <p class="scene-note">我妈不发清单，她发微信。我成了她的备忘录——会响、会催、不会忘的那种。</p>
+        <div class="pull reveal">
+          <p>可就在同一周，<b>我妈发微信让我提醒她去医院。</b></p>
+          <small>这件事我们放在下一页单独讲——它是这个项目真正的起点，也是后来所有取舍的依据。</small>
         </div>
       </div>
 
@@ -136,7 +134,48 @@
   </div>
 </section>
 
-<!-- ══════════ 03b 第一版 ══════════ -->
+<!-- ══════════ 03m 我妈 ══════════ -->
+<section class="slide" id="s03m" data-title="我妈"
+  data-note="【60 秒】这一页只讲人，不讲产品。她从来不写清单，她发微信，一句一条。一开始我嫌烦，后来我发现她不是懒——她是真的记不住，又怕耽误，所以把这件事外包给了我。再后来我自己也漏了，因为我只有一颗脑子，而我在同时替三个人记着。所以小步的第一行需求不是「收集信息」，是「替她记着，再在对的时候推一下」。">
+  <div class="wrap two">
+    <div class="col">
+      <p class="kicker reveal">00　我妈</p>
+      <h2 class="reveal">我妈不会用清单，<br>她把我<em>当备忘录</em>。</h2>
+      <p class="lead reveal">她从来不写待办，她发微信。一句一条，有时候一天三条。</p>
+
+      <div class="scene reveal">
+        <span class="scene-tag">那一周 · 我妈发来的三条</span>
+        <p class="scene-msg">明天提醒我去医院。<span class="tm">22:41</span></p>
+        <p class="scene-msg">记得提醒我交电费。<span class="tm">22:43</span></p>
+        <p class="scene-msg">别忘了啊。<span class="tm">次日 08:03</span></p>
+        <p class="scene-note">三条消息，两个日期，零个说明。她的「待办清单」就是我。</p>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="beats">
+        <div class="beat reveal">
+          <span class="beat-day">一开始</span>
+          <p>我嫌她烦。心想这不是一句话的事吗——你自己记一下，不就行了。</p>
+        </div>
+        <div class="beat reveal">
+          <span class="beat-day">后来</span>
+          <p>我发现她不是懒。她是真的记不住：五十多岁，脑子里同时挂着复查、电费、我弟的学费、我外婆的药。而她怕耽误——<b>怕耽误了是我的事</b>。所以她把这件事，外包给了我。</p>
+        </div>
+        <div class="beat reveal">
+          <span class="beat-day">再后来</span>
+          <p>我自己也漏了。因为我只有一颗脑子，而我在同时替三个人记着：她的、同学的、还有我自己的。</p>
+        </div>
+      </div>
+
+      <div class="pull reveal">
+        <p>所以小步的第一行需求，不是「收集信息」，是<b>「替她记着，再在对的时候推一下」</b>。</p>
+        <small>这句话后来成了产品的主语：它不给你更多清单，它做那只替你记着的手。</small>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════ 03b 第一版 ══════════ -->
 <section class="slide" id="s03b" data-title="第一版"
   data-note="【30 秒】别解释界面。第一版整页是比赛列表，底下一个大按钮「一键收集比赛信息」；访谈之后我们把它划掉，只留一个入口——说出来。不是我们变聪明了，是被访谈打回了原形：他要的不是「看到全部」，是「有人替我记得」。">
@@ -614,6 +653,52 @@
         <img src="assets/ai-modal.png" alt="小布能执行动作：读取、修改、撤销">
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ══════════ 13b 习惯 ══════════ -->
+<section class="slide" id="s13b" data-title="习惯"
+  data-note="【50 秒】提醒解决的是「别忘」，可人生里还有一半是「每天都做一点」。习惯不靠意志力，靠看见。所以我们把它做成一周七个小格子：当天点一下就打卡，不做表单、不设目标、不问时长；过了那天没打就变红并锁定，不能补——我们不给你「明天补上」的幻觉。连续 3、7、21、30 天各有一个徽章；最多只让加 8 个，因为导览里那句原话是「别贪多，先走好一件」。">
+  <div class="wrap">
+    <p class="kicker reveal">00　习惯</p>
+    <h2 class="reveal">坚持不下去，<br>是因为你<em>看不见</em>它。</h2>
+    <p class="lead reveal">提醒解决的是「别忘」；可人生里还有一半，是「每天都做一点」。习惯不靠意志力，靠看见——产品叫「小步」，就是因为一段路只能一小步接一小步地走完。</p>
+
+    <div class="habit-demo reveal">
+      <div class="hd-top">
+        <b class="hd-name">喝水</b>
+        <span class="hd-streak">连续 12 天</span>
+        <span class="hd-week">本周 4 / 7</span>
+        <span class="hd-best">最长 21 天</span>
+      </div>
+      <div class="hd-mid">
+        <div class="hd-grid">
+          <div class="hd-cell on"><span>一</span></div>
+          <div class="hd-cell on"><span>二</span></div>
+          <div class="hd-cell on"><span>三</span></div>
+          <div class="hd-cell on today"><span>四</span><em>今天</em></div>
+          <div class="hd-cell future"><span>五</span></div>
+          <div class="hd-cell future"><span>六</span></div>
+          <div class="hd-cell future"><span>日</span></div>
+        </div>
+        <div class="hd-side">
+          <div class="hd-badges">
+            <span class="hd-badge got">3 天</span>
+            <span class="hd-badge got">7 天</span>
+            <span class="hd-badge">21 天</span>
+            <span class="hd-badge">30 天</span>
+          </div>
+          <p class="hd-legend"><i></i>漏了那天变红并锁定，不能补</p>
+          <p class="hd-legend sup">加满 8 个就提示「先把手上的走完」</p>
+        </div>
+      </div>
+    </div>
+
+    <ol class="habit-points">
+      <li class="reveal"><b>打卡只要一下。</b>点圆圈或点今天那一格，不做表单、不设目标、不问时长——门槛低到「顺手」。</li>
+      <li class="reveal"><b>漏了就红，不能补。</b>我们不给你「明天补上」的幻觉：格子是诚实的一周，不是可以回填的打卡表。</li>
+      <li class="reveal"><b>最多 8 个，先走好一件。</b>连续 3 / 7 / 21 / 30 天各有徽章；到了上限就提示「先把手上的走完」。</li>
+    </ol>
   </div>
 </section>
 

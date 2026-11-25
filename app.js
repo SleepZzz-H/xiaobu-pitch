@@ -1,4 +1,4 @@
-/* 小步 · 演讲站 —— 翻页、讲稿、演示模式、封面动效、操作影片 */
+﻿/* 小步 · 演讲站 —— 翻页、讲稿、演示模式、封面动效、操作影片 */
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -182,48 +182,85 @@
   if (typed) { raf = setTimeout(typeHero, 700); }
   document.addEventListener('visibilitychange', () => { alive = !document.hidden; });
 
-  /* ───────── 操作影片 ───────── */
+  /* ───────── 操作影片（逐帧预解码 + rAF 计时，避免卡顿） ───────── */
   const film = $('#film');
   if (film) {
-    const a = $('.film-a', film), b = $('.film-b', film),
-          prog = $('#filmProg'), toggle = $('#filmToggle');
-    let frames = [], idx = 0, timer = null, playing = true, showingA = true, ms = 260;
+    const prog = $('#filmProg'), toggle = $('#filmToggle');
+    let layers = [];          // 每帧一个已加载的 <img>
+    let durs = [];            // 每帧时长(ms)
+    let idx = 0;
+    let playing = true;
+    let inView = false;
+    let acc = 0;              // 当前帧已播放时长
+    let last = 0;
+    let rafId = null;
+    let totalDur = 1;
+    let ready = false;
 
-    const useFrames = (list, dur) => {
-      frames = list; ms = dur || 260;
-      idx = 0; a.src = frames[0]; a.classList.add('on'); b.classList.remove('on');
-      play();
+    const show = (i) => {
+      if (layers[idx]) layers[idx].classList.remove('on');
+      idx = i;
+      if (layers[idx]) layers[idx].classList.add('on');
+      const done = durs.slice(0, idx).reduce((a, b) => a + b, 0);
+      prog.style.width = ((done + durs[idx] * 0.5) / totalDur * 100).toFixed(2) + '%';
     };
 
-    const tick = () => {
-      if (!playing || frames.length < 2) return;
-      idx = (idx + 1) % frames.length;
-      const showEl = showingA ? b : a, hideEl = showingA ? a : b;
-      showEl.src = frames[idx];
-      showEl.classList.add('on');
-      hideEl.classList.remove('on');
-      showingA = !showingA;
-      prog.style.width = ((idx + 1) / frames.length * 100).toFixed(1) + '%';
+    const loop = (t) => {
+      if (!ready) return;
+      if (last === 0) last = t;
+      const dt = Math.min(t - last, 120);   // 掉帧时最多补 120ms，避免跳帧
+      last = t;
+      if (playing && inView) {
+        acc += dt;
+        while (acc >= durs[idx]) {
+          acc -= durs[idx];
+          show((idx + 1) % layers.length);
+        }
+      }
+      rafId = requestAnimationFrame(loop);
     };
-    const play = () => { clearInterval(timer); if (frames.length > 1) timer = setInterval(tick, ms); playing = true; toggle.textContent = '暂停'; };
-    const pause = () => { clearInterval(timer); playing = false; toggle.textContent = '播放'; };
 
+    const play = () => { playing = true; last = 0; toggle.textContent = '暂停'; toggle.classList.add('spinning'); };
+    const pause = () => { playing = false; toggle.textContent = '播放'; toggle.classList.remove('spinning'); };
     toggle.addEventListener('click', (e) => { e.stopPropagation(); playing ? pause() : play(); });
 
     fetch('assets/flow/manifest.json', { cache: 'no-cache' })
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((m) => {
-        const list = (m.frames || []).map((f) => 'assets/flow/' + f);
-        // 预加载
-        let loaded = 0;
-        list.forEach((src) => { const im = new Image(); im.onload = im.onerror = () => { if (++loaded === list.length) useFrames(list, m.ms); }; im.src = src; });
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error('no manifest'))))
+      .then(async (m) => {
+        const list = (m.frames || []).map((f) => (typeof f === 'string' ? { f, ms: m.ms || 260 } : f));
         if (!list.length) throw new Error('empty');
+
+        // 一次性建好所有图层，先把每一帧都解码完成，再开始播
+        const holder = document.createElement('div');
+        holder.className = 'film-track';
+        layers = list.map((f) => {
+          const im = document.createElement('img');
+          im.src = 'assets/flow/' + f.f;
+          im.alt = '';
+          im.decoding = 'async';
+          holder.appendChild(im);
+          return im;
+        });
+        film.insertBefore(holder, film.firstChild);
+        $('.film-a', film)?.remove();
+        $('.film-b', film)?.remove();
+
+        await Promise.all(layers.map((im) => (im.decode ? im.decode().catch(() => im.onload) : Promise.resolve())));
+
+        durs = list.map((f) => f.ms || 260);
+        totalDur = durs.reduce((a, b) => a + b, 0);
+        ready = true;
+        show(0);
+        play();
+        rafId = requestAnimationFrame(loop);
       })
-      .catch(() => { /* 没有影片就用静态首页截图 */ });
+      .catch(() => { /* 没有影片就保持静态图 */ });
 
     const fio = new IntersectionObserver((es) => {
-      es.forEach((e) => { if (e.isIntersecting && playing) play(); else if (!e.isIntersecting) clearInterval(timer); });
-    }, { threshold: 0.25 });
+      es.forEach((e) => { inView = e.isIntersecting; last = 0; });
+    }, { threshold: 0.15 });
     fio.observe(film);
+
+    document.addEventListener('visibilitychange', () => { last = 0; });
   }
 })();

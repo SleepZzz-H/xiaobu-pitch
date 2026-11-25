@@ -1,4 +1,4 @@
-﻿/* ════════════════════════════════════════════
+/* ════════════════════════════════════════════
    小步 · 演讲站
    纸底 / 陶土橙 / 松绿，一页一屏，点一下翻一页
    ════════════════════════════════════════════ */
@@ -94,9 +94,9 @@ a{color:inherit}
   min-height:100vh;
   scroll-snap-align:start;scroll-snap-stop:always;
   display:flex;align-items:center;justify-content:center;
-  padding:92px 64px 76px;
+  padding:clamp(52px,7vh,86px) 5vw clamp(44px,6vh,72px);
 }
-.wrap{width:min(1300px,100%);margin:0 auto}
+.wrap{width:min(1640px,100%);margin:0 auto}
 
 /* ══ 文字系统 ══ */
 .kicker{font-size:11.5px;letter-spacing:.24em;color:var(--clay);margin:0 0 20px;font-weight:500}
@@ -169,8 +169,8 @@ small{font-size:13.5px;line-height:1.85;color:var(--ink-3)}
 /* ══ 三栏/两栏 ══ */
 .notes3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:34px 0 0}
 .notes3.tight{margin-top:26px}
-.two{display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:start}
-.two-wide{display:grid;grid-template-columns:1fr .82fr;gap:56px;align-items:center}
+.two{display:grid;grid-template-columns:1.02fr .98fr;gap:72px;align-items:start}
+.two-wide{display:grid;grid-template-columns:1fr .74fr;gap:72px;align-items:center}
 .col{min-width:0}
 
 .slip{background:#fff;border:1px solid rgba(35,32,28,.08);border-radius:14px;padding:22px 22px 20px;box-shadow:0 16px 34px -30px rgba(35,32,28,.6)}
@@ -247,10 +247,11 @@ small{font-size:13.5px;line-height:1.85;color:var(--ink-3)}
 .phone{position:relative;background:#1C1A17;border-radius:34px;padding:9px 9px 12px;box-shadow:0 40px 80px -50px rgba(35,32,28,.9)}
 .phone-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;opacity:.25}
 .phone-notch i{width:4px;height:4px;border-radius:50%;background:#fff}
-.phone-screen{height:min(56vh,560px);aspect-ratio:390/844;border-radius:26px;overflow:hidden;position:relative;background:var(--paper)}
+.phone-screen{height:min(70vh,720px);aspect-ratio:390/844;border-radius:26px;overflow:hidden;position:relative;background:var(--paper)}
 .film{position:absolute;inset:0}
-.film img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;opacity:0}
-.film img.on{opacity:1}
+.film-track{position:absolute;inset:0}
+.film-track img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;opacity:0;will-change:opacity}
+.film-track img.on{opacity:1}
 .film-bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(35,32,28,.1)}
 .film-bar span{display:block;height:100%;width:0;background:var(--pine)}
 .film-toggle{position:absolute;right:8px;bottom:10px;border:0;border-radius:999px;background:rgba(35,32,28,.55);color:#fff;font-family:inherit;font-size:10px;padding:4px 10px;cursor:pointer;opacity:0;transition:opacity .2s;pointer-events:auto}
@@ -329,7 +330,7 @@ small{font-size:13.5px;line-height:1.85;color:var(--ink-3)}
 .dark .layers b{color:var(--paper)}
 
 /* ══ 入场动画 ══ */
-.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal{opacity:0;transform:translateY(9px);transition:opacity .38s cubic-bezier(.22,.61,.36,1),transform .38s cubic-bezier(.22,.61,.36,1)}
 .reveal.in{opacity:1;transform:none}
 
 /* ══ 讲稿抽屉 ══ */
@@ -359,6 +360,7 @@ small{font-size:13.5px;line-height:1.85;color:var(--ink-3)}
   box-shadow:0 20px 40px -24px #000;transition:transform .3s ease;backdrop-filter:blur(6px)
 }
 body.present .present-bar{transform:translateX(-50%)}
+body:not(.present) .present-bar{display:none}
 .present-bar button{
   background:transparent;border:0;color:rgba(246,241,232,.85);font-family:inherit;font-size:12px;
   padding:7px 12px;border-radius:999px;cursor:pointer;transition:.15s
@@ -461,3 +463,194 @@ small{font-size:14.5px;line-height:1.8}
 .q p{font-family:var(--f-display);font-size:clamp(19px,1.9vw,30px);line-height:1.7;margin:0 0 12px;font-weight:500}
 .q figcaption{font-style:normal;font-size:13px;letter-spacing:.04em;color:rgba(246,241,232,.55)}
 .q figcaption span{color:var(--clay-soft)}
+
+/* ══════════ 第一版线框图（03b） ══════════ */
+.wire-row{display:grid;grid-template-columns:1fr 68px 1fr;align-items:start;margin:26px 0 0}
+.wire{margin:0;text-align:center;display:flex;flex-direction:column;align-items:center}
+.wire figcaption{font-size:clamp(15px,.9vw,20px);letter-spacing:.1em;color:var(--ink-3);margin:0 0 12px}
+.wire img{display:block;height:min(52vh,560px);width:auto;max-width:100%}
+.wire .wn{font-size:clamp(17px,1vw,23px);line-height:1.55;margin:14px 0 0;max-width:16em;min-height:0;color:var(--ink-2)}
+.wire.dead img{opacity:.66;filter:grayscale(.5)}
+.wire.dead .wn{color:var(--clay)}
+.wire.live .wn{color:var(--pine)}
+.wire-arrow{align-self:center;text-align:center;font-size:30px;color:var(--clay);opacity:.85;margin-top:calc(min(52vh,560px)/2 - 10px)}
+@media (max-width:1080px){
+  .wire-row{grid-template-columns:1fr 40px 1fr}
+  .wire-arrow{font-size:22px;margin-top:100px}
+  .wire .wn{font-size:14px}
+}
+@media (max-width:640px){
+  .wire-row{grid-template-columns:1fr}
+  .wire-arrow{margin:6px 0;transform:rotate(90deg)}
+  .wire img{max-width:240px}
+  .wire .wn{min-height:0}
+}
+
+/* ══════════════════════════════════════════════════════════
+   排版修订：字号随视口放大（1440 笔记本 → 1920 投影都够大）
+   之前是固定 px，投影上相对更小，远看糊。现在基准全部用 vw。
+   ══════════════════════════════════════════════════════════ */
+html{font-size:clamp(16px,.62vw + 8px,22px)}
+body{font-size:clamp(19px,1.05vw,25px);line-height:1.75}
+
+h1{font-size:clamp(46px,4.9vw,104px);line-height:1.1}
+h2{font-size:clamp(40px,4.1vw,86px);line-height:1.16}
+h3{font-size:clamp(17px,1vw,23px)}
+
+.kicker,.eyebrow{font-size:clamp(13px,.82vw,18px);letter-spacing:.2em}
+.lead{font-size:clamp(19px,1.18vw,27px);line-height:1.85;max-width:40em}
+.lead.tight{font-size:clamp(18px,1.06vw,24px)}
+small{font-size:clamp(15px,.9vw,20px);line-height:1.8}
+.meta{font-size:clamp(14px,.85vw,19px)}
+
+/* 数字与图表 */
+.stat b{font-size:clamp(38px,3.4vw,72px)}
+.stat span{font-size:clamp(17px,1vw,23px)}
+.stat i{font-size:clamp(14px,.85vw,19px)}
+.big b{font-size:clamp(52px,5vw,104px)}
+.big p{font-size:clamp(16px,.95vw,22px)}
+
+/* 卡片与列表 */
+.case p{font-size:clamp(17px,1vw,23px)}
+.case-tag{font-size:clamp(13px,.8vw,18px)}
+.case cite{font-size:clamp(14px,.85vw,19px)}
+.finds li{font-size:clamp(17px,1.02vw,23px)}
+.profiles span{font-size:clamp(14px,.9vw,20px)}
+.slip b{font-size:clamp(18px,1.05vw,24px)}
+.slip span{font-size:clamp(16px,.95vw,21px)}
+.mini{font-size:clamp(16px,.95vw,21px)}
+.mini b{font-size:clamp(13px,.8vw,18px)}
+.pull p{font-size:clamp(20px,1.35vw,32px)}
+.demo-cap{font-size:clamp(14px,.85vw,19px)}
+
+/* 表格 */
+.tbl{font-size:clamp(16px,.98vw,23px)}
+.tbl th{font-size:clamp(13px,.8vw,18px);letter-spacing:.14em}
+.tbl td{padding:clamp(12px,.9vw,20px) 16px clamp(12px,.9vw,20px) 0}
+
+/* 小布三层 */
+.layers b{font-size:clamp(18px,1.05vw,24px)}
+.layers span{font-size:clamp(16px,.95vw,22px)}
+.layers li{padding-bottom:clamp(14px,1.1vw,24px)}
+
+/* 商业三路径 */
+.path b{font-size:clamp(17px,1vw,23px)}
+.path p{font-size:clamp(15px,.9vw,20px)}
+.path span{font-size:clamp(12px,.72vw,16px)}
+.moat span{font-size:clamp(14px,.86vw,19px)}
+
+/* 场景气泡 */
+.scene-tag{font-size:clamp(13px,.8vw,18px)}
+.scene-msg{font-size:clamp(16px,.95vw,21px);padding:12px 20px}
+.scene-note{font-size:clamp(15px,.88vw,20px)}
+
+/* 用户旅程 */
+.jm header p{font-size:clamp(19px,1.12vw,26px)}
+.jm header span{font-size:clamp(13px,.8vw,18px)}
+.jm dt{font-size:clamp(14px,.84vw,19px)}
+.jm dd{font-size:clamp(16px,.96vw,22px)}
+.jm footer{font-size:clamp(15px,.86vw,20px)}
+
+/* 原话 */
+.q p{font-size:clamp(22px,1.6vw,38px)}
+.q figcaption{font-size:clamp(14px,.85vw,19px)}
+
+/* 线框图 */
+.wire figcaption{font-size:clamp(15px,.9vw,20px)}
+.wire .wn{font-size:clamp(17px,1vw,23px)}
+
+/* 导航 */
+.rail a{font-size:clamp(11px,.66vw,15px)}
+.brand{font-size:clamp(14px,.85vw,19px)}
+.btn{font-size:clamp(13px,.8vw,18px)}
+.pager{font-size:clamp(13px,.8vw,18px)}
+
+/* 宽屏下更舒展 */
+@media (min-width:1500px){
+  .slide{padding-left:5vw;padding-right:5vw}
+}
+
+/* ══════════ 对比页（矢量重绘，替代低分辨率截图） ══════════ */
+.cmp{display:grid;grid-template-columns:1fr 64px 1fr;align-items:start;gap:0;margin:clamp(24px,3vh,44px) 0 0}
+.cmp-side{margin:0}
+.cmp-side figcaption{font-size:clamp(14px,.82vw,18px);letter-spacing:.16em;color:var(--ink-3);margin:0 0 12px;font-weight:600}
+.cmp-side.after figcaption{color:var(--pine)}
+.cmp-side.before figcaption{color:var(--clay)}
+.spec{background:rgba(255,255,255,.62);border:1px solid rgba(35,32,28,.1);border-radius:18px;padding:clamp(16px,1.6vw,26px)}
+.cmp-side.before .spec{background:rgba(35,32,28,.035)}
+.spec-label{font-size:clamp(13px,.78vw,17px);letter-spacing:.1em;color:var(--ink-3);margin:0 0 10px}
+.spec-label + .row-pills + .spec-label{margin-top:clamp(14px,1.4vw,20px)}
+.row-pills{display:flex;flex-wrap:wrap;gap:9px}
+.row-pills .pill{font-size:clamp(13px,.8vw,17px);padding:7px 15px;border-radius:999px;border:1px solid rgba(35,32,28,.16);color:var(--ink-2);background:#fff}
+.row-pills .pill.on{background:var(--pine);border-color:var(--pine);color:#fff;font-weight:600}
+.row-pills .pill.new{border-style:dashed;border-color:var(--clay);color:var(--clay)}
+.spec-foot{font-size:clamp(12px,.72vw,16px);color:var(--ink-3);margin:12px 0 0}
+.row-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.row-cards .lv{border:1px solid rgba(35,32,28,.14);border-radius:12px;padding:11px 12px;background:#fff}
+.row-cards .lv b{display:block;font-size:clamp(13px,.82vw,18px);margin-bottom:5px;color:var(--ink)}
+.row-cards .lv span{display:block;font-size:clamp(11.5px,.7vw,15px);line-height:1.5;color:var(--ink-3)}
+.row-cards .lv.on{border-color:var(--pine);background:rgba(47,93,80,.07)}
+.row-cards .lv.on b{color:var(--pine)}
+.row-cards .lv.on b::before{content:"○ ";font-size:.9em}
+.cmp-arrow{align-self:center;justify-self:center;font-size:clamp(20px,1.6vw,30px);color:rgba(35,32,28,.28);padding-top:40px}
+.cmp-why{margin:18px 0 0;font-size:clamp(14px,.85vw,19px);line-height:1.7;color:var(--ink-2)}
+.cmp-why.good{color:var(--pine)}
+.input-line{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid rgba(35,32,28,.14);border-radius:12px;padding:12px 14px}
+.input-line .typed{flex:1;font-size:clamp(14px,.88vw,19px);color:var(--ink)}
+.mini-btn{width:clamp(26px,1.7vw,36px);height:clamp(26px,1.7vw,36px);border-radius:50%;display:grid;place-items:center;font-size:clamp(11px,.72vw,15px);background:rgba(35,32,28,.06);color:var(--ink-2)}
+.mini-btn.add{background:var(--pine);color:#fff}
+.recognized{font-size:clamp(12px,.74vw,16px);color:var(--pine);margin:10px 0 10px;font-weight:600}
+.result-card{display:flex;align-items:baseline;justify-content:space-between;gap:12px;background:#fff;border:1px solid rgba(35,32,28,.14);border-radius:12px;padding:13px 15px;margin:14px 0 0}
+.result-card b{font-size:clamp(14px,.88vw,19px)}
+.result-card span{font-size:clamp(13px,.8vw,17px);color:var(--ink-3)}
+.result-card.bad span{color:var(--clay)}
+@media (max-width:1080px){
+  .cmp{grid-template-columns:1fr;gap:18px}
+  .cmp-arrow{display:none}
+  .row-cards{grid-template-columns:1fr}
+}
+
+.spec-missing{margin:16px 0 0;padding:12px 14px;border:1px dashed rgba(210,97,62,.5);border-radius:10px;color:var(--clay);font-size:clamp(12.5px,.74vw,16px);line-height:1.5;background:rgba(210,97,62,.045)}
+
+/* ══════════ 高度收敛：保证一屏一页不溢出 ══════════ */
+#s03b .wire img{height:min(42vh,430px)}
+#s03b .wire-row{margin-top:clamp(14px,2vh,26px)}
+#s03b .wire .wn{font-size:clamp(13px,.8vw,17px);margin-top:10px}
+#s03b .lead.tight{margin-bottom:0}
+#s04 .stats{margin-top:clamp(16px,2.2vh,28px)}
+#s04 .notes3{margin-top:clamp(14px,2vh,26px)}
+#s04 .hypo{margin-top:clamp(14px,2vh,26px)}
+#s04 .hypo li{padding-bottom:clamp(8px,1.1vh,14px)}
+
+/* s03b 专用：把空间让给图，收紧页边距与标题 */
+#s03b{padding-top:clamp(40px,5vh,68px);padding-bottom:clamp(28px,3.6vh,44px)}
+#s03b h2{margin-bottom:clamp(10px,1.6vh,18px)}
+#s03b .wire img{height:min(52vh,500px)}
+#s03b .wire-arrow{margin-top:calc(min(52vh,500px)/2 + 6px)}
+.wn-wide{margin:clamp(10px,1.6vh,18px) 0 0;text-align:center;font-size:clamp(14px,.86vw,19px);line-height:1.7;color:var(--ink-2)}
+
+/* s03b 终版：图更大、标题更紧，两图同高同宽 */
+#s03b h2{font-size:clamp(34px,3.3vw,66px)}
+#s03b .wire img{height:min(58vh,600px);width:auto}
+#s03b .wire-arrow{margin-top:calc(min(58vh,600px)/2 + 6px)}
+#s03b .wire figcaption{font-size:clamp(13px,.8vw,17px);margin-bottom:8px}
+
+/* s03b 两栏：左文右图 */
+.two-split{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(28px,3.4vw,64px);align-items:center}
+.two-split .col-text{max-width:34em}
+.two-split .col-text .lead:last-child{margin-bottom:0}
+#s03b .wire-row{display:flex;align-items:flex-start;justify-content:center;gap:clamp(10px,1.2vw,22px);margin:0}
+#s03b .wire{flex:0 0 auto}
+#s03b .wire img{height:min(56vh,560px);width:auto}
+#s03b .wire-arrow{margin-top:calc(min(56vh,560px)/2);font-size:clamp(16px,1.3vw,24px);color:rgba(35,32,28,.3)}
+@media (max-width:1080px){
+  .two-split{grid-template-columns:1fr;gap:22px}
+  .two-split .col-text{max-width:none}
+}
+
+/* 投影可读性再上一档（远距离） */
+body{font-size:clamp(20px,1.06vw,27px);line-height:1.78}
+.lead{font-size:clamp(21px,1.22vw,29px);line-height:1.72}
+.lead.tight{font-size:clamp(19px,1.1vw,26px)}
+.slide h2{font-size:clamp(42px,4.15vw,88px);line-height:1.18}
+.slide h3{font-size:clamp(18px,1.05vw,24px)}

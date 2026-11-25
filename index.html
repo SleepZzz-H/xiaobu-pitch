@@ -1,512 +1,503 @@
-﻿<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>小步 · 说出来，就有人替你记住</title>
-<meta name="description" content="轻记 · 小步：你的待办清单，正在变成一本不敢打开的账。小步只挑出「现在这一件」，陪你走完最难的开头 5 分钟。一个人、5 天、37 个版本的真实来历。">
-
+<meta name="description" content="轻记·小步：一个只回答「现在做哪一件」的语音待办助手。42 份问卷、6 位深度访谈、5 位用户测试，把「没人提醒」做成一句话就能记下的东西。">
+<meta name="theme-color" content="#F6F1E8">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sleepzzz-h.github.io/xiaobu-pitch/">
-<link rel="canonical" href="https://sleepzzz-h.github.io/xiaobu-pitch/">
-<meta property="og:site_name" content="轻记 · 小步">
 <meta property="og:title" content="小步 · 说出来，就有人替你记住">
-<meta property="og:description" content="你的待办清单，正在变成一本不敢打开的账。小步只挑出「现在这一件」——先让你动起来，再谈计划。">
+<meta property="og:description" content="你的待办清单，正在变成一本不敢打开的账。小步只挑出「现在这一件」。">
 <meta property="og:image" content="https://sleepzzz-h.github.io/xiaobu-pitch/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="小步 · 说出来，就有人替你记住">
-<meta name="twitter:description" content="你的待办清单，正在变成一本不敢打开的账。">
+<meta name="twitter:description" content="一个只回答「现在做哪一件」的语音待办助手。">
 <meta name="twitter:image" content="https://sleepzzz-h.github.io/xiaobu-pitch/assets/og-image.png">
-<meta name="theme-color" content="#F6F1E8">
 <link rel="icon" href="assets/icon-180.png">
-<link rel="apple-touch-icon" href="assets/icon-180.png">
-<link rel="preload" as="image" href="assets/mascot-front.png">
+<link rel="canonical" href="https://sleepzzz-h.github.io/xiaobu-pitch/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
 <div class="grain" aria-hidden="true"></div>
-<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+<div class="progress"><span id="progBar"></span></div>
 
 <header class="topbar">
-  <a class="brand" href="#top">
-    <img src="assets/mascot-icon.png" alt="" width="26" height="26">
-    <span>轻记 · <b>小步</b></span>
-  </a>
-  <div class="actions">
+  <a class="brand" href="#s01"><img src="assets/icon-180.png" alt="" width="26" height="26"><span>轻记 · 小步</span></a>
+  <div class="topbar-actions">
     <button class="btn ghost" id="notesBtn" type="button">讲稿</button>
-    <button class="btn solid" id="presentBtn" type="button">演讲模式</button>
+    <button class="btn solid" id="presentBtn" type="button">演示模式</button>
   </div>
 </header>
 
 <nav class="rail" id="rail" aria-label="章节导航"></nav>
+<div class="pager"><span id="pagerNow">1</span><i>/</i><span id="pagerAll">15</span></div>
 
-<main id="top">
+<main class="slides" id="slides">
 
-  <!-- ══════════ HERO ══════════ -->
-  <section class="hero" id="hero" data-title="开场"
-    data-note="【开场 20 秒】不要先讲产品。先问一句：这周有没有一件事，你记着要做，但一直没开？停两秒，等他们点头。然后说：我们做的事，就是把它变成「下一件」——说完闭嘴，让首屏自己打字。">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="kicker reveal">轻记 · 小步 —— 语音待办助手</p>
-        <h1 class="reveal">说出来，<br>就有人替你记住。</h1>
-        <p class="lede reveal">你的待办清单，正在变成一本<em>不敢打开的账</em>。</p>
-        <p class="sub reveal">划掉的没几条，躺着的越来越多。小步不给你更多清单——它只挑出「现在这一件」，然后陪你把最难的开头 5 分钟走完。</p>
-        <div class="hero-cta reveal">
-          <a class="btn big" href="#s03">现在试一下 <span aria-hidden="true">↘</span></a>
-          <a class="link" href="#s01">它是怎么来的</a>
-        </div>
-        <p class="hero-meta reveal"><span>2026.11</span><i></i><span>一个人</span><i></i><span>5 天</span><i></i><span>37 个版本</span><i></i><span>12 条真实反馈</span></p>
+<!-- ══════════ 01 封面 ══════════ -->
+<section class="slide hero" id="s01" data-title="开场"
+  data-note="【20 秒】先问一句：这周有没有一件事，你记着要做，但一直没开始？停两秒，等他们点头。然后说：我们做的，就是把它变成「下一件」。">
+  <div class="wrap hero-wrap">
+    <div class="hero-copy">
+      <p class="eyebrow reveal">轻记 · 小步 —— 语音待办助手</p>
+      <h1 class="reveal">说出来，<br>就有人替你记住。</h1>
+      <p class="lede reveal">你的待办清单，正在变成一本不敢打开的账。<br>小步不给你更多清单——它只挑出「现在这一件」，然后陪你走完最难的开头 5 分钟。</p>
+      <div class="hero-actions reveal">
+        <a class="btn solid" href="#s09">现在试一下</a>
+        <a class="btn ghost" href="#s03">它是怎么来的</a>
       </div>
-
-      <div class="hero-stage reveal" aria-hidden="true">
-        <div class="stage-glow"></div>
-
-        <div class="mock">
-          <div class="mock-top">
-            <span class="mock-time">15:00</span>
-            <span class="mock-badge" id="mockCount">1/3</span>
-          </div>
-          <div class="mock-head">
-            <div>
-              <h3>下午好</h3>
-              <p>11月18日 · 星期二</p>
-            </div>
-            <div class="ring"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18"/><circle class="on" cx="22" cy="22" r="18"/></svg><span id="ringTxt">1</span></div>
-          </div>
-          <p class="mock-line"><i class="dot"></i>还有 3 件事，先做这一件</p>
-
-          <div class="mock-card" id="mockCard">
-            <div class="mock-card-h">
-              <span class="cb"></span>
-              <b id="cardTitle">给导师发开题报告</b>
-            </div>
-            <div class="mock-chips" id="cardChips">
-              <span class="chip time">明天 15:00</span>
-              <span class="chip dur">90 分钟</span>
-              <span class="chip imp">重要</span>
-            </div>
-            <button class="mock-start" type="button" tabindex="-1">开始 5 分钟</button>
-          </div>
-
-          <div class="mock-input">
-            <span class="caret-line"><span id="typed"></span><span class="caret"></span></span>
-            <span class="mic" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/></svg></span>
-          </div>
-        </div>
-
-        <img class="peek" src="assets/mascot-front.png" alt="">
-      </div>
+      <p class="meta reveal">2026.11 · 一个人 · 5 天 · 37 个版本<br>42 份问卷 · 6 位深访 · 15 条记录 · 5 位用户测试</p>
     </div>
-    <div class="scroll-hint" aria-hidden="true"><span></span>往下</div>
-  </section>
 
-  <!-- ══════════ 01 问题 ══════════ -->
-  <section class="ch" id="s01" data-title="问题"
-    data-note="【30 秒】别念清单，讲一个早上：打开待办，七条红色的「已逾期」排在最上面，你滑两下就锁屏了，跟自己说晚上再说——晚上也不会说。结论只一句：问题不是记不住，是启动不了。所有工具都在解决第一个。">
-    <div class="wrap">
-      <div class="ch-head reveal">
-        <span class="num">01</span>
-        <p class="kicker">问题</p>
+    <div class="hero-visual reveal">
+      <div class="mock">
+        <div class="mock-top"><span>15:00</span><span class="ring"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" class="ring-bg"/><circle cx="22" cy="22" r="18" class="ring-fg" id="ringFg"/></svg><b id="ringNum">0</b></span></div>
+        <div class="mock-hi">下午好</div>
+        <div class="mock-date">11月18日 · 星期二</div>
+        <div class="mock-line"><i></i>还有 3 件事，先做这一件</div>
+        <div class="mock-card" id="mockCard">
+          <div class="mock-task"><span class="mock-check"></span>给导师发开题报告</div>
+          <div class="mock-chips" id="cardChips">
+            <span class="chip">明天 15:00</span>
+            <span class="chip">90 分钟</span>
+            <span class="chip hot">重要</span>
+          </div>
+          <button class="mock-start" type="button">开始 5 分钟</button>
+        </div>
+        <div class="mock-input">
+          <span id="typed"></span><i class="caret"></i>
+          <span class="mock-mic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0v-5a3 3 0 0 1 3-3Z"/><path d="M6 11a6 6 0 0 0 12 0M12 17v3.5"/></svg></span>
+        </div>
       </div>
-      <h2 class="reveal">你不是忘了，<br><em>你是不敢点开。</em></h2>
-      <p class="lead reveal">早上打开待办，七条红色的「已逾期」排在最上面。你往下滑了两下，锁屏，跟自己说晚上再说。——晚上也不会说。</p>
-
-      <div class="notes-3">
-        <article class="slip reveal" style="--r:-1.5deg">
-          <p class="slip-q">「这件事我记着呢。」</p>
-          <p class="slip-a">记了三周。今天还在原地。</p>
-        </article>
-        <article class="slip reveal" style="--r:1.2deg;--d:.08s">
-          <p class="slip-q">「等会儿就做。」</p>
-          <p class="slip-a">等到了最后一秒，熬一个通宵做完，然后发誓下次不这样。</p>
-        </article>
-        <article class="slip reveal" style="--r:-0.8deg;--d:.16s">
-          <p class="slip-q">「我明明写下来了。」</p>
-          <p class="slip-a">写在三个 App 和一个备忘录里，一个都没再打开。</p>
-        </article>
-      </div>
-
-      <div class="pull reveal">
-        <p>所以我们把问题拆成两行：<b>记不住</b>，和<b>启动不了</b>。</p>
-        <p class="muted">所有工具都在解决第一行。第二行没人碰——因为它不像个功能，它像个人问题。</p>
-      </div>
+      <img class="peek" src="assets/mascot-front.png" alt="小布">
     </div>
-  </section>
+  </div>
+  <span class="scroll-hint">往下 · 或点一下</span>
+</section>
 
-  <!-- ══════════ 02 来历 ══════════ -->
-  <section class="ch alt" id="s02" data-title="来历"
-    data-note="【50 秒】讲两件事，别讲方法。第一件：这个项目原来是做「校园比赛信息收集」的，我们想做一个聚合器。第二件：我妈不发清单，她发微信让我提醒她——我成了她的备忘录。然后讲访谈：比赛信息不难找，老师一转就来了，他们说起的另一件事是「没人提醒我」。最后一句：这两件事是同一件事，所以首页从「收集信息」改成了「提醒我一下」。">
-    <div class="wrap narrow">
-      <div class="ch-head reveal">
-        <span class="num">02</span>
-        <p class="kicker">来历</p>
-      </div>
-      <h2 class="reveal">它一开始，<br>是用来<em>找比赛</em>的。</h2>
-      <p class="lead reveal">比赛信息散在群里、公众号里、食堂门口的海报上。我们想做一个聚合器——一个页面看完全部比赛。这就是这个项目最初的全部想法。</p>
+<!-- ══════════ 02 问题 ══════════ -->
+<section class="slide" id="s02" data-title="问题"
+  data-note="【30 秒】别念清单。讲一个你亲眼见过的场景：你自己或室友，备忘录里躺着十几条，一条都没动。然后给结论——问题不是记不住，是启动不了。大多数工具只解决前一个。">
+  <div class="wrap">
+    <p class="kicker reveal">01　问题</p>
+    <h2 class="reveal">你不是忘了，<br><em>你是不敢点开。</em></h2>
+    <p class="lead reveal">早上打开待办，七条红色的「已逾期」排在最上面。你往下滑了两下，锁屏，跟自己说晚上再说。——晚上也不会说。</p>
 
-      <div class="scene reveal">
-        <span class="scene-tag">同一周 · 我妈发来的两条微信</span>
-        <p class="scene-msg">明天提醒我去医院。</p>
-        <p class="scene-msg">记得提醒我交电费。</p>
-        <p class="scene-note">我妈不发清单，她发微信。我成了她的备忘录——会响、会催、不会忘的那种。</p>
-      </div>
+    <div class="notes3">
+      <div class="slip reveal"><b>「这件事我记着呢。」</b><span>记了三周。今天还在原地。</span></div>
+      <div class="slip reveal"><b>「等会儿就做。」</b><span>等到了最后一秒，熬一个通宵做完，然后发誓下次不这样。</span></div>
+      <div class="slip reveal"><b>「我明明写下来了。」</b><span>写在三个 App 和一个备忘录里，一个都没再打开。</span></div>
+    </div>
 
-      <p class="lead reveal">后来我们去找同学聊天，第一句问的是「比赛信息是不是很难找」。答案是：不难，老师在群里一转就来了。可他们说起了另一件事——<b>没人提醒我。</b></p>
+    <div class="pull reveal">
+      <p>所以我们把问题拆成两行：<b>记不住</b>，和<b>启动不了</b>。</p>
+      <small>所有工具都在解决第一行。第二行没人碰——因为它不像个功能，它像个人问题。</small>
+    </div>
+  </div>
+</section>
 
-      <div class="fork reveal">
-        <div class="fork-side">
-          <span class="fork-tag">我们以为的问题</span>
-          <p>比赛信息太分散，学生找不到 <span class="strike">→ 那就做个信息聚合</span></p>
+<!-- ══════════ 03 来历 ══════════ -->
+<section class="slide" id="s03" data-title="来历"
+  data-note="【70 秒】讲两件事，别讲方法。第一件：这个项目原来是做「校园比赛信息收集」的，第一天画的第一版是「一键收集比赛信息」（指左边那张，已经被划掉）。第二件：我妈不发清单，她发微信让我提醒她——我成了她的备忘录。然后讲访谈：比赛信息不难找，老师一转就来了，他们说起的另一件事是「没人提醒我」。最后一句：这两件事是同一件事，所以首页从「收集信息」改成了「提醒我一下」。">
+  <div class="wrap">
+    <p class="kicker reveal">02　来历</p>
+    <h2 class="reveal">它一开始，<br>是用来<em>找比赛</em>的。</h2>
+
+    <div class="two">
+      <div class="col">
+        <p class="lead reveal">比赛信息散在群里、公众号里、食堂门口的海报上。我们想做一个聚合器——一个页面看完全部比赛。第一天画的第一版，就是「一键收集比赛信息」。</p>
+
+        <div class="scene reveal">
+          <span class="scene-tag">同一周 · 我妈发来的两条微信</span>
+          <p class="scene-msg">明天提醒我去医院。</p>
+          <p class="scene-msg">记得提醒我交电费。</p>
+          <p class="scene-note">我妈不发清单，她发微信。我成了她的备忘录——会响、会催、不会忘的那种。</p>
         </div>
-        <div class="fork-mid" aria-hidden="true">→</div>
-        <div class="fork-side now">
-          <span class="fork-tag">访谈里真实的问题</span>
-          <p>信息从来不缺。大家缺的是同一样东西：<b>一个会在对的时候戳你一下的人。</b></p>
-        </div>
+
+        <p class="lead reveal">后来我们去找同学聊天，问「比赛信息是不是很难找」。答案是：不难，老师在群里一转就来了。可他们说起了另一件事——<b>没人提醒我。</b></p>
       </div>
 
-      <p class="lead reveal">我妈的事，和我同学的事，其实是同一件事：<b>都需要有个人替他们记着，再在对的时候推一下。</b>于是我们把首页从「收集信息」改成了「提醒我一下」——产品是从那一刻才真的成立的。</p>
-
-      <div class="namecard reveal">
-        <div class="namecard-l">
-          <span class="mark"><img src="assets/mark.svg" alt="小步图形标"></span>
+      <div class="col wire-col reveal">
+        <div class="wire dead">
+          <span class="wire-tag">第一版 · 访谈前</span>
+          <img src="assets/wire-v1.svg" alt="第一版手绘：首页是一键收集比赛信息" width="220" height="400">
+          <span class="wire-note">「一键收集比赛信息」——被我们划掉了</span>
         </div>
-        <div class="namecard-r">
-          <h3>为什么叫「小步」</h3>
-          <p>它对付的不是「记不住」，是「<b>启动不了</b>」。名字就是把门槛写进名字里：<br>不用一次做完，走一小步就算数。</p>
-          <p class="muted">提示语是「就差这一小步」，连续天数不叫连胜，叫「连着走了 N 天」。</p>
+        <div class="wire-arrow" aria-hidden="true">→</div>
+        <div class="wire live">
+          <span class="wire-tag">现在 · 访谈后</span>
+          <img src="assets/wire-v2.svg" alt="现在：首页只回答现在做哪一件" width="220" height="400">
+          <span class="wire-note">只剩一个入口：说出来</span>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ══════════ 03 解法 ══════════ -->
-  <section class="ch" id="s03" data-title="解法"
-    data-note="【60 秒】这里停下来，让他们点。说：这不是录屏。随便说一句，比如「明天下午三点提醒我交作业」。让他们看到它自己把时间拆出来、排进去，然后只剩下一张卡。">
-    <div class="wrap">
-      <div class="ch-head reveal">
-        <span class="num">03</span>
-        <p class="kicker">解法</p>
+    <p class="lead tight reveal">我妈的事，和我同学的事，其实是同一件事：<b>都需要有个人替他们记着，再在对的时候推一下。</b>于是我们把首页从「收集信息」改成了「提醒我一下」——产品是从那一刻才真的成立的。</p>
+  </div>
+</section>
+
+<!-- ══════════ 04 方法 ══════════ -->
+<section class="slide" id="s04" data-title="方法"
+  data-note="【50 秒】这一页只证明一件事：这些话不是我们编的。42 份问卷、6 位深访、15 条原始记录、5 位用户测试，都是同一批同学和真实用户。强调「0 提示、不给选项」和「时间码可回溯」——这是方法，不是嘴。最后一句：三条假设，一条被推翻、一条被改写、一条悬着。">
+  <div class="wrap">
+    <p class="kicker reveal">03　研究</p>
+    <h2 class="reveal">我们没猜，<br>我们去<em>问了</em>。</h2>
+    <p class="lead reveal">两轮：先问「卡在哪」，再问「能不能自己做完」。所有原话都带时间码，可以回溯到录音。</p>
+
+    <div class="stats">
+      <div class="stat reveal"><b>42</b><span>份问卷</span><i>校内群投放，六道封闭题</i></div>
+      <div class="stat reveal"><b>6</b><span>位深度访谈</span><i>4 个专业 · 横跨 3 个年级</i></div>
+      <div class="stat reveal"><b>15</b><span>条原始记录</span><i>每条只记一个观点，编 E01–E15</i></div>
+      <div class="stat reveal"><b>5</b><span>位用户测试</span><i>从大学生到 50 岁家长</i></div>
+    </div>
+
+    <div class="notes3 tight">
+      <div class="mini reveal"><b>怎么问</b>半结构化，单场 3–6 分钟，当场录音，本地转写逐字稿，不做二次改写。</div>
+      <div class="mini reveal"><b>怎么记</b>受访者 A–F 匿名编号，括号里是录音时间码，任何一句都能回溯。</div>
+      <div class="mini reveal"><b>怎么防带偏</b>0 提示、不给选项，只追问「当时你在做什么」。</div>
+    </div>
+
+    <div class="hypo reveal">
+      <span class="hypo-label">三条假设，最后长这样</span>
+      <div class="hypo-row"><b>H1</b> 学生缺少比赛信息来源<em class="half">部分推翻</em><span>来源其实存在，5/6 来自老师转发。缺的是承接与跟进。</span></div>
+      <div class="hypo-row"><b>H2</b> 不用日历，是因为不知道有这类工具<em class="no">推翻</em><span>他们知道，只是嫌麻烦、还在犹豫。</span></div>
+      <div class="hypo-row"><b>H3</b> 只要提前提醒截止，就能减少错过<em class="maybe">不确定</em><span>有人说提前三天，有人说提前两三小时——时机本身是变量。</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 05 发现 01 ══════════ -->
+<section class="slide" id="s05" data-title="发现 01"
+  data-note="【40 秒】信息不是没有，是被一条转发链垄断。5/6 靠老师转发，0/6 自己检索。链条一断——群解散、消息沉底、换老师——痕迹都不留。别展开数据，讲「群解散了，聊天记录没了」这一句就够。">
+  <div class="wrap">
+    <p class="kicker reveal">04　发现 01</p>
+    <h2 class="reveal">信息不是没有，<br>是被一条<em>转发链</em>垄断。</h2>
+
+    <div class="bigrow">
+      <div class="big reveal"><b>5<span>/6</span></b><p>首次获知来自老师、辅导员、教务转发</p></div>
+      <div class="big reveal"><b>0<span>/6</span></b><p>靠自己检索发现新比赛</p></div>
+      <div class="big reveal"><b>2<span>/6</span></b><p>事后已经找不到通知原文</p></div>
+    </div>
+
+    <blockquote class="quote reveal">
+      <p>「一般这种比赛是指导老师分享到群里，然后我们带着自己的项目去报名参加的。」</p>
+      <cite>受访者 A｜工业设计 24 级｜00:00:59</cite>
+    </blockquote>
+
+    <p class="lead tight reveal">问卷是同向的：<b>班级/社团群 50.0%</b>，老师通知或同学转告 28.6%——<b>78.6% 的第一步都发生在群里</b>。链条一断（群解散、消息沉底、换了任课老师），信息连痕迹都不留。</p>
+  </div>
+</section>
+
+<!-- ══════════ 06 发现 02 ══════════ -->
+<section class="slide" id="s06" data-title="发现 02"
+  data-note="【40 秒】第二件：截止时间没有任何外部容器接住。6 个人里没有一个把截止写进日历或清单。不是不会用，是嫌麻烦。他们的替代方案是「人肉提醒」——同学之间互相转告，有效，但依赖别人也记得。">
+  <div class="wrap">
+    <p class="kicker reveal">05　发现 02</p>
+    <h2 class="reveal">截止时间，<br>没有一个<em>外部容器</em>接住它。</h2>
+
+    <div class="bigrow">
+      <div class="big reveal"><b>0<span>/6</span></b><p>把截止日期写进日历、待办或清单</p></div>
+      <div class="big reveal"><b>50<span>%</span></b><p>问卷里选「靠脑子记」（21/42）</p></div>
+      <div class="big reveal"><b>17<span>%</span></b><p>用日历或清单类工具（7/42）</p></div>
+    </div>
+
+    <blockquote class="quote reveal">
+      <p>「我们现在就只能基本上就只能靠脑袋去记了。因为会投很多个比赛。」</p>
+      <cite>受访者 C｜艺术与科技 大三｜00:01:25</cite>
+    </blockquote>
+
+    <p class="lead tight reveal">不是不会用，是嫌麻烦——「记日历，稍微有点麻烦」。现在的替代方案是<b>人肉提醒</b>：同学之间互相转告。它有效，但它依赖别人也记得。</p>
+  </div>
+</section>
+
+<!-- ══════════ 07 发现 03 ══════════ -->
+<section class="slide" id="s07" data-title="发现 03"
+  data-note="【50 秒】这一页是全场最反直觉的：漏点不在「没听说」，在「听说了但没跟上」，而且集中在截止前 1–3 天。三个故事各讲一句：变更（省赛复活赛提前，一小时拷进 U 盘）、犹豫（怕精力不够，一直拖）、开始太晚（截止前一天材料没做完）。收口：从想参加到能提交，没有人在关键节点接一次手。">
+  <div class="wrap">
+    <p class="kicker reveal">06　发现 03</p>
+    <h2 class="reveal">真正的漏点，<br>在截止前<em>一到三天</em>。</h2>
+
+    <div class="notes3">
+      <div class="case reveal">
+        <span class="case-tag">变更没接住</span>
+        <p>省赛的复活赛流程提前了，他上课中途用一小时把材料拷进 U 盘赶去录影——「差一点就差一点就错过了」。</p>
+        <cite>受访者 A｜00:01:41</cite>
       </div>
-      <h2 class="reveal">一句话，<br>然后<em>只做这一件。</em></h2>
-
-      <div class="demo-grid">
-        <div class="demo-steps">
-          <div class="step reveal">
-            <span class="step-n">1</span>
-            <h3>说出来</h3>
-            <p>不选日期、不挑优先级、不填表单。你说「明天下午三点，一个半小时，很重要」——它自己拆成时间、时长和轻重，边打边显示拆出来的结果。</p>
-          </div>
-          <div class="step reveal">
-            <span class="step-n">2</span>
-            <h3>排进去</h3>
-            <p>有固定时间的先占位，其余按轻重填进今天的空档；中午不排，块之间留 10 分钟，一天最多排 4 小时——排不下的顺延，不给你造一个假计划。</p>
-          </div>
-          <div class="step reveal">
-            <span class="step-n">3</span>
-            <h3>只做这一件</h3>
-            <p>首页永远只有一张卡：现在做这一件。按钮不叫「完成」，叫「开始 5 分钟」。做完可以停，停不叫放弃，叫先歇着。</p>
-          </div>
-          <p class="demo-note reveal"><b>右边是真的。</b>不是截图，也不是录屏——你现在就可以点它、说一句话试试。</p>
-        </div>
-
-        <div class="demo-phone reveal">
-          <div class="phone" id="phone">
-            <div class="phone-bar"><i></i><i></i><i></i><span>xiaobu-reminder</span></div>
-            <div class="phone-screen">
-              <div class="phone-loading" id="phoneLoading">
-                <img src="assets/mascot-icon.png" alt="" width="56" height="56">
-                <p>正在把小步装进来…</p>
-              </div>
-              <iframe id="appFrame" title="小步 App 在线演示" loading="lazy"
-                data-src="demo/index.html" allow="microphone"></iframe>
-            </div>
-          </div>
-          <a class="phone-link" href="https://x1038604972-web.github.io/xiaobu-reminder/" target="_blank" rel="noopener">在手机上打开 ↗</a>
-          <p class="phone-hint">可以直接点。如果停在登录页，点一下「游客进入」就行——不用注册。</p>
-        </div>
+      <div class="case reveal">
+        <span class="case-tag">犹豫期没有终点</span>
+        <p>「怕精力不够，就比较犹豫。」没有人给「要不要参加」设一个最后决定日，于是拖到截止前一天才想起。</p>
+        <cite>受访者 D｜会计 22 级</cite>
+      </div>
+      <div class="case reveal">
+        <span class="case-tag">开始太晚</span>
+        <p>第一次申报，不知道完整材料长什么样；截止前一天才发现有些东西没做完，最后和老师商量放弃。</p>
+        <cite>受访者 F｜马克思主义理论</cite>
       </div>
     </div>
-  </section>
 
-  <!-- ══════════ 04 倒叙 ══════════ -->
-  <section class="ch alt" id="s04" data-title="过程"
-    data-note="【60 秒】这里放慢速度。指着那张手绘图说：第一天我们画的是「一键收集比赛信息」，访谈之后我们亲手把它划掉了，最后只剩一个入口——语音输入待办。重点不是我们多努力，是每一步都退得回去。后面 12 条反馈一条带过。">
-    <div class="wrap">
-      <div class="ch-head reveal">
-        <span class="num">04</span>
-        <p class="kicker">过程</p>
-      </div>
-      <h2 class="reveal">我们是怎么<em>走到这儿的。</em></h2>
-      <p class="lead reveal">倒回第一天。产品不是被「想」出来的，是被一次次退回去改出来的。</p>
+    <div class="pull reveal">
+      <p>从「想参加」到「能提交」之间，<b>没有人在关键节点上接一次手。</b></p>
+      <small>所以我们不做一个「更多信息的地方」，我们做一个「到点戳你一下的人」。</small>
+    </div>
+  </div>
+</section>
 
-      <ol class="timeline">
-        <li class="reveal">
-          <span class="t-day">D1 · 08:58</span>
-          <h3>首版能跑，但不好用</h3>
-          <p>一个列表、一个输入框、三个 tab。三条硬约束从第一天定死：单文件、数据只存本地、只用一套配色。</p>
-        </li>
-        <li class="reveal">
-          <span class="t-day">D1 · 调研</span>
-          <h3>把「比赛」从问题里拿掉</h3>
-          <p>问卷和访谈告诉我们：信息不是瓶颈。真正的瓶颈是「知道要做，但不动」。范围就此扩大。</p>
-        </li>
-        <li class="reveal highlight">
-          <span class="t-day">D2 · 在纸上</span>
-          <h3>我们把自己画的第一版，划掉了。</h3>
-          <p>第一天想做的其实是「校园比赛信息收集」——首页上百人抢一场比赛的入口。访谈之后，纸上那些「信息汇总」「比赛列表」被一条条划掉，最后只剩一个入口。</p>
-          <div class="sketch">
-            <figure class="dead">
-              <img src="assets/sketch-collect.jpg" alt="手绘草图：一键收集信息汇总" loading="lazy">
-              <figcaption>一开始画的入口：一键收集比赛信息</figcaption>
-            </figure>
-            <span class="sketch-arrow" aria-hidden="true">→</span>
-            <figure class="live">
-              <img src="assets/sketch-voice.jpg" alt="手绘草图：语音输入待办" loading="lazy">
-              <figcaption>访谈之后留下的入口：语音输入待办</figcaption>
-            </figure>
-          </div>
-        </li>
-        <li class="reveal">
-          <span class="t-day">D2 · 用户测试</span>
-          <h3>12 条吐槽回来了</h3>
-          <p>两组访谈。真正的收获不是「他说了什么」，而是把吐槽翻译成病因——同一个病因，往往对应好几条抱怨。</p>
-        </li>
-        <li class="reveal">
-          <span class="t-day">D3 · 一条反馈</span>
-          <h3>「帧率低了。」</h3>
-          <p>不是手机差，是我们给主题上了一层大面积毛玻璃，还叠了粒子特效。这条反馈逼出了「性能优先」开关，也让我们第一次知道：好看要付性能税。</p>
-        </li>
-        <li class="reveal">
-          <span class="t-day">D4 · 改</span>
-          <h3>提醒强度、时间解析、首页只放一件</h3>
-          <p>三处都来自同一个病因：用户看不出区别，就等于没做。</p>
-        </li>
-        <li class="reveal">
-          <span class="t-day">D5 · 加 AI</span>
-          <h3>小布上线</h3>
-          <p>不只是能聊——它能真的把话变成动作，写进你的列表里。</p>
-        </li>
+<!-- ══════════ 08 原话 ══════════ -->
+<section class="slide dark" id="s08" data-title="原话"
+  data-note="【40 秒】只念三句，别解释。念完第三句停一下：它反驳了「越早提醒越好」这个直觉——这也是我们为什么把提醒做成「到点才响」，而不是提前三天轰炸。">
+  <div class="wrap">
+    <p class="kicker reveal">07　原话</p>
+    <h2 class="reveal">他们自己的说法，<br><em>一字未改。</em></h2>
+
+    <div class="quotes">
+      <figure class="q reveal">
+        <p>「我们现在就只能基本上就只能靠脑袋去记了。」</p>
+        <figcaption>受访者 C｜艺术与科技｜00:01:25　<span>记录成本</span></figcaption>
+      </figure>
+      <figure class="q reveal">
+        <p>「因为那个群好像已经解散了，就没有聊天记录了。」</p>
+        <figcaption>受访者 A｜工业设计 24 级｜00:02:15　<span>信息可追溯性</span></figcaption>
+      </figure>
+      <figure class="q reveal">
+        <p>「提前三天太早了……像高铁那种提前两三个小时，差不多吧。」</p>
+        <figcaption>受访者 E｜艺术与科技｜00:04:39　<span>提醒时机</span></figcaption>
+      </figure>
+    </div>
+
+    <p class="lead tight reveal">第三句值得单独说：它<b>反驳了「越早提醒越好」</b>。所以我们的提醒不是提前三天轰炸，而是「到点才响、响了能回应」。</p>
+  </div>
+</section>
+
+<!-- ══════════ 09 解法 + 演示 ══════════ -->
+<section class="slide" id="s09" data-title="解法"
+  data-note="【70 秒】停在这里，让他们点。左边是三步，右边是真实运行的产品——不是截图，不是录屏拼接，是本地跑的单文件网页。随便说一句，比如「明天下午三点提醒我给导师发开题报告，一个半小时，很重要」，让他们看它把时间、时长、轻重拆出来，然后只剩下一张卡。">
+  <div class="wrap two-wide">
+    <div class="col">
+      <p class="kicker reveal">08　解法</p>
+      <h2 class="reveal">说一句话，<br>它替你<em>排进今天</em>。</h2>
+
+      <ol class="steps">
+        <li class="reveal"><b>说出来</b><span>不选日期、不挑优先级、不填表单。你说「明天下午三点，一个半小时，很重要」——它自己拆成时间、时长和轻重，边打边显示拆出来的结果。</span></li>
+        <li class="reveal"><b>排进去</b><span>有固定时间的先占位，其余按轻重填进今天的空档；中午不排，块间留 10 分钟，一天最多排 4 小时——排不下的顺延，不给你造一个假计划。</span></li>
+        <li class="reveal"><b>只做这一件</b><span>首页永远只有一张卡：现在做这一件。按钮不叫「完成」，叫「开始 5 分钟」。做完可以停，停不叫放弃，叫先歇着。</span></li>
       </ol>
-
-      <div class="counters reveal">
-        <div class="counter"><b>37</b><span>个版本快照</span></div>
-        <div class="counter"><b>13</b><span>条 AI 开发指令</span></div>
-        <div class="counter"><b>12</b><span>条真实反馈</span></div>
-        <div class="counter"><b>7</b><span>处界面重做</span></div>
-        <div class="counter"><b>15</b><span>条解析单测</span></div>
-      </div>
-
-      <div class="grid37 reveal" id="grid37" aria-hidden="true"></div>
-      <p class="footnote reveal">上面这些小方块，是 37 次「改之前先存一份」。它们不是功劳簿——只证明一件事：<b>每一步都退得回去。</b></p>
     </div>
-  </section>
 
-  <!-- ══════════ 05 对比 ══════════ -->
-  <section class="ch" id="s05" data-title="改了什么"
-    data-note="【40 秒】两处改动，每处只说一句「改之前用户怎么误解的」。不要说像素，不要报尺寸。">
-    <div class="wrap">
-      <div class="ch-head reveal">
-        <span class="num">05</span>
-        <p class="kicker">改了什么</p>
+    <div class="col demo reveal">
+      <div class="phone">
+        <div class="phone-notch"><i></i><i></i><i></i></div>
+        <div class="phone-screen">
+          <div class="film" id="film" role="img" aria-label="小步使用流程演示">
+            <img class="film-a" src="assets/now-home.png" alt="">
+            <img class="film-b" alt="">
+            <div class="film-bar"><span id="filmProg"></span></div>
+            <button class="film-toggle" id="filmToggle" type="button">暂停</button>
+          </div>
+        </div>
       </div>
-      <h2 class="reveal">同一个界面，<em>改了两处。</em></h2>
-      <p class="lead reveal">用户说「看不出区别」，就是设计还没做完。</p>
+      <p class="demo-cap">这是产品在本地真实运行的一段操作：说一句 → 拆出来 → 记下 → 开始 5 分钟。</p>
+    </div>
+  </div>
+</section>
 
-      <div class="ba">
-        <article class="ba-item reveal">
-          <div class="ba-title">
-            <span class="ba-no">A</span>
-            <h3>提醒强度</h3>
-          </div>
-          <div class="ba-pair">
-            <figure class="shot">
-              <div class="shot-frame"><img src="assets/ba-level-before-crop.png" alt="改进前的提醒强度设置"></div>
-              <figcaption><b>改之前</b>三档长得一模一样，用户以为是调音量。</figcaption>
-            </figure>
-            <div class="ba-arrow" aria-hidden="true">→</div>
-            <figure class="shot">
-              <div class="shot-frame"><img src="assets/ba-level-after-crop.png" alt="改进后的提醒强度设置"></div>
-              <figcaption><b>改之后</b>每档下面直接写清楚会发生什么。</figcaption>
-            </figure>
-          </div>
-          <p class="ba-detail">「轻提醒」= 弹 1 次 · 「普通」= 10 分钟后再弹 · 「重要」= 每 5 分钟追最多 4 次。把抽象的词换成人能预演的结果。</p>
-        </article>
+<!-- ══════════ 10 可用性测试 ══════════ -->
+<section class="slide" id="s10" data-title="测试"
+  data-note="【60 秒】5 位用户，4 个任务，全程录屏。不讲他们多喜欢，只讲他们卡在哪——这一页是全站最诚实的一页。念两三条就够：麦克风点了没反应、打完字不知道点哪保存、「明天9点」被设成了现在。收口：不是他们不会用，是我们把门槛留给了用户。">
+  <div class="wrap">
+    <p class="kicker reveal">09　测试</p>
+    <h2 class="reveal">5 个人，4 个任务，<br>我们把<em>卡住</em>的地方记了下来。</h2>
 
-        <article class="ba-item reveal">
-          <div class="ba-title">
-            <span class="ba-no">B</span>
-            <h3>时间解析</h3>
-          </div>
-          <div class="ba-pair">
-            <figure class="shot">
-              <div class="shot-frame"><img src="assets/ba-parse-before-crop.png" alt="改进前的时间解析"></div>
-              <figcaption><b>改之前</b>说「明天 9 点」不写上午下午，会静默套用当前时间。</figcaption>
-            </figure>
-            <div class="ba-arrow" aria-hidden="true">→</div>
-            <figure class="shot">
-              <div class="shot-frame"><img src="assets/ba-parse-after-crop.png" alt="改进后的时间解析"></div>
-              <figcaption><b>改之后</b>边输边回显「已识别 · 明天 09:00」，有歧义就给两个胶囊让你一点即定。</figcaption>
-            </figure>
-          </div>
-          <p class="ba-detail">解析会错，这不可避免。关键是错的时候用户能不能一眼看见——所以它永远以一颗胶囊显示出来，错了改一颗，不影响整批。</p>
-        </article>
+    <div class="profiles reveal">
+      <span>24 级大学生（男）</span><span>22 级大学生（男）</span><span>上班族（女）</span><span>年轻女教师</span><span>家长 · 50 岁（女）</span>
+    </div>
+
+    <ul class="finds">
+      <li class="reveal">麦克风点了没反应，只能改用打字</li>
+      <li class="reveal">打完字不知道点哪里保存</li>
+      <li class="reveal">「明天 9 点」没写上午下午，提醒被设成了现在</li>
+      <li class="reveal">「轻提醒」和「重要」看不出区别，以为是声音大小</li>
+      <li class="reveal">「推迟」只有固定几档，选不到自己想要的时间</li>
+      <li class="reveal">删除不敢点，怕找不回来</li>
+      <li class="reveal">创建入口不够明显，要先找一下</li>
+      <li class="reveal">字小、颜色浅，看不清</li>
+    </ul>
+
+    <div class="pull reveal">
+      <p>不是他们不会用，<b>是我们把门槛留给了用户。</b></p>
+      <small>这 8 条最后收敛成 12 条反馈、7 处界面重做、5 处机制补齐。</small>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 11 12 → 7 ══════════ -->
+<section class="slide" id="s11" data-title="改进"
+  data-note="【60 秒】用户说的从来不是需求，是症状。我们把 12 条吐槽翻成 5 个病因，再翻成控件。念表格里的两行就行——「轻重有啥区别」其实是三级干预只写在首页；「推迟能不能自定义」其实是把选择换成了猜。">
+  <div class="wrap">
+    <p class="kicker reveal">10　改进</p>
+    <h2 class="reveal">12 条吐槽，<br>改成 <em>7 处界面</em>。</h2>
+
+    <div class="stats stats-sm">
+      <div class="stat reveal"><b>12</b><span>条真实反馈</span><i>2 组访谈 + 自测</i></div>
+      <div class="stat reveal"><b>7</b><span>处界面重做</span><i>首页 / 创建 / 弹窗 / 删除 / 设置 / 解析 / 重复</i></div>
+      <div class="stat reveal"><b>5</b><span>处机制补齐</span><i>星期多选 · 推迟自定义 · 撤销 · 时间回显 · 性能降级</i></div>
+      <div class="stat reveal"><b>467</b><span>行代码改动</span><i>一天之内，3 次提交</i></div>
+    </div>
+
+    <table class="tbl reveal">
+      <thead><tr><th>用户说的</th><th>其实是</th><th>我们改的</th></tr></thead>
+      <tbody>
+        <tr><td>「帧率低了」</td><td>磨砂和粒子的 blur 是性能税</td><td>性能优先开关 + 低端机自动降级</td></tr>
+        <tr><td>「轻重有啥区别」</td><td>三级干预只写在首页，创建界面看不见</td><td>每档就地解释 + 颜色 / 声音 / 震动</td></tr>
+        <tr><td>「推迟能不能自定义」</td><td>我们把「选择」换成了「猜」</td><td>快捷档 + 自定义时间 + 记住上次</td></tr>
+        <tr><td>「删除给个确定吧」</td><td>确认不指名，撤销不说是哪条</td><td>指名确认 + 指名撤销 + 回到原位</td></tr>
+        <tr><td>「找不到在哪」</td><td>功能树 4 层深，第一次用必迷路</td><td>首次分步引导 + 适老化模式</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════ 12 前后对比 ══════════ -->
+<section class="slide" id="s12" data-title="对比"
+  data-note="【50 秒】只讲两组，别全讲。第一组：三个档位长得一模一样，用户只能猜；现在每档下面直接写清楚弹几次。第二组：输入「明天9点」被静默套成现在；现在边打边回显，歧义给两个胶囊一点即定。圈重点的那一下，用手指屏幕。">
+  <div class="wrap">
+    <p class="kicker reveal">11　变在哪</p>
+    <h2 class="reveal">同一个界面，<em>改了两处</em>。</h2>
+    <p class="lead reveal">用户说「看不出区别」，就是设计还没做完。</p>
+
+    <div class="ba-pair">
+      <div class="ba reveal">
+        <h3>提醒强度：把「轻 / 普通 / 重要」翻译成人话</h3>
+        <div class="ba-imgs">
+          <figure><img src="assets/ba-level-before-crop.png" alt="改进前：三个档位外观完全相同"><figcaption>改进前</figcaption></figure>
+          <span class="ba-arrow" aria-hidden="true">→</span>
+          <figure><img src="assets/ba-level-after-crop.png" alt="改进后：每档写清楚会弹几次"><figcaption>改进后</figcaption></figure>
+        </div>
+        <p class="ba-note">三档长得一模一样，区别只写在首页说明里——用户当场理解成「声音大 / 声音小」。现在每档下面直接写「弹 1 次 / 10 分钟后再弹 1 次 / 每 5 分钟追，最多 4 次」。</p>
+      </div>
+
+      <div class="ba reveal">
+        <h3>时间解析：9 点就是 9 点，不再是「现在」</h3>
+        <div class="ba-imgs">
+          <figure><img src="assets/ba-parse-before-crop.png" alt="改进前：输入明天9点，静默套用当前时间"><figcaption>改进前</figcaption></figure>
+          <span class="ba-arrow" aria-hidden="true">→</span>
+          <figure><img src="assets/ba-parse-after-crop.png" alt="改进后：边输边回显，歧义给两个胶囊"><figcaption>改进后</figcaption></figure>
+        </div>
+        <p class="ba-note">没写上午下午，解析器没有兜底也没有回显，结果直接落库——用户以为识别失败。现在边输边回显「已识别 · 明天 09:00」，歧义给两个胶囊：上午 09:00 / 晚上 21:00。</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ══════════ 06 小布 ══════════ -->
-  <section class="ch dark" id="s06" data-title="小布"
-    data-note="【50 秒】一句话讲三层，重心落在「模型改不坏数据」。这是别人做不到、也最容易讲砸的地方——不要展开技术细节。">
-    <div class="wrap">
-      <div class="ch-head reveal">
-        <span class="num">06</span>
-        <p class="kicker">小布</p>
-      </div>
-      <h2 class="reveal">它不只是能记，<br><em>还能动手改。</em></h2>
+<!-- ══════════ 13 小布 ══════════ -->
+<section class="slide dark" id="s13" data-title="小布"
+  data-note="【50 秒】把聊天框贴在 App 上不叫 AI。小布必须真的能写你的数据，所以我们把它做成三层，最后拍板的那层不是模型。模型只负责把绕的说法翻成一句动作；改不改得动数据，由执行器说了算——模型再聪明也改不坏数据。">
+  <div class="wrap two-wide">
+    <div class="col">
+      <p class="kicker reveal">12　小布</p>
+      <h2 class="reveal">它不只是能记，<br>还能<em>动手改</em>。</h2>
       <p class="lead reveal">把聊天框贴在 App 上不叫 AI。小布必须真的能写你的数据——所以我们把它做成三层，最后拍板的那层不是模型。</p>
 
-      <div class="ai-grid">
-        <div class="layers">
-          <div class="layer reveal">
-            <span class="l-no">①</span>
-            <div><h3>本地意图引擎</h3><p>关键词 + 正则判断你要「记 / 查 / 改 / 完成 / 删」，复用 App 自己的时间解析。离线可用，零成本，不用等网络。</p></div>
-          </div>
-          <div class="layer reveal">
-            <span class="l-no">②</span>
-            <div><h3>大模型（可选）</h3><p>DeepSeek / Kimi / 通义，浏览器直连，Key 只存在你自己机器上。它只负责把绕的说法翻成一句动作。</p></div>
-          </div>
-          <div class="layer accent reveal">
-            <span class="l-no">③</span>
-            <div><h3>执行器</h3><p>模型和本地共用同一个执行器：真的写数据、重渲染、给「撤销」。<b>模型再聪明也改不坏数据。</b></p></div>
-          </div>
-          <ul class="ai-list">
-            <li class="reveal">「明天 9 点提醒我交作业」→ 真写进列表，卡片给「改时间 / 撤销」</li>
-            <li class="reveal">「删掉牛奶」（有两条相似的）→ 先问你要动哪一条</li>
-            <li class="reveal">「我明天忙不忙」→ 报明天的量；「打开适老化」→ 直接改设置</li>
-          </ul>
+      <ol class="layers">
+        <li class="reveal"><b>本地意图引擎</b><span>关键词 + 正则判断你要「记 / 查 / 改 / 完成 / 删」，复用 App 自己的时间解析。离线可用，零成本，不用等网络。</span></li>
+        <li class="reveal"><b>大模型（可选）</b><span>DeepSeek / Kimi / 通义，浏览器直连，Key 只存在你自己机器上。它只负责把绕的说法翻成一句动作。</span></li>
+        <li class="reveal"><b>执行器</b><span>模型和本地共用同一个执行器：真的写数据、重渲染、给「撤销」。模型再聪明也改不坏数据。</span></li>
+      </ol>
+    </div>
+    <div class="col demo reveal">
+      <div class="shot-stack">
+        <img src="assets/ai-chat.png" alt="小布对话：说一句，它记下并可以改时间、撤销">
+        <img src="assets/ai-modal.png" alt="小布能执行动作：读取、修改、撤销">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 14 商业 ══════════ -->
+<section class="slide" id="s14" data-title="商业"
+  data-note="【50 秒】谁会为它付钱：22–28 岁，手上同时有 5–15 件「应该做」的事，愿意说、不愿意填表。三条路：个人订阅、校园渠道、小团队。为什么是我们：数据在本地、模型可选、入口只有一个——这三条决定了它便宜、敢用、用得下去。">
+  <div class="wrap">
+    <p class="kicker reveal">13　给谁用 · 怎么活</p>
+    <h2 class="reveal">谁会为它<em>付钱</em>。</h2>
+
+    <div class="two">
+      <div class="col">
+        <p class="lead reveal">22–28 岁，学生或刚工作。手上同时有 <b>5–15 件</b>「应该做」的事：论文、作业、报销、体检、约人。</p>
+        <p class="lead reveal">他们有明确的拖延倾向，能感觉到「事情堆着」的焦虑，但每次打开待办 App 都会被长清单劝退。<br>共同点：<b>愿意说，不愿意填表单；需要被推着开始，不需要被评判。</b></p>
+      </div>
+      <div class="col">
+        <div class="paths">
+          <div class="path reveal"><span>先做</span><b>个人订阅</b><p>记录、排程、提醒全部免费；AI 对话与多端同步订阅。大模型用用户自己的 Key，边际成本接近 0。</p></div>
+          <div class="path reveal"><span>渠道</span><b>校园</b><p>心理中心、辅导员、社团、新生礼包。一个人替一群人装，获客成本最低，也最容易验证留存。</p></div>
+          <div class="path reveal"><span>后面</span><b>小团队</b><p>HR 的入职清单、项目组的周任务、工作室的排期。从 20 人以内的团队开始，先证明「别人也愿意让它替自己记事」。</p></div>
         </div>
-
-        <figure class="ai-shot reveal">
-          <div class="shot-frame"><img src="assets/ai-chat.png" alt="小布对话界面"></div>
-          <figcaption>本地模式下也能记、能改；连上模型后，绕的说法也听得懂。</figcaption>
-        </figure>
       </div>
     </div>
-  </section>
 
-  <!-- ══════════ 07 商业 ══════════ -->
-  <section class="ch" id="s07" data-title="给谁用"
-    data-note="【40 秒】说清楚第一个付钱的人是谁。不要背市场规模，不要说「千亿赛道」。投资人更信「你已经认识的那 20 个人」。">
-    <div class="wrap">
-      <div class="ch-head reveal">
-        <span class="num">07</span>
-        <p class="kicker">给谁用 · 怎么活</p>
-      </div>
-      <h2 class="reveal">谁会为它<em>付钱。</em></h2>
-
-      <div class="who reveal">
-        <p class="who-line">22–28 岁，学生或刚工作。<br>手上同时有 <b>5–15 件</b>「应该做」的事：论文、作业、报销、体检、约人。</p>
-        <p class="who-line muted">他们有明确的拖延倾向，能感觉到「事情堆着」的焦虑，但每次打开待办 App 都会被长清单劝退。<br>共同点：<b>愿意说，不愿意填表单</b>；需要被推着开始，不需要被评判。</p>
-      </div>
-
-      <div class="paths">
-        <article class="path reveal">
-          <span class="p-tag">先做</span>
-          <h3>个人订阅</h3>
-          <p>记录、排程、提醒全部免费；AI 对话与多端同步订阅。大模型用用户自己的 Key，<b>边际成本接近 0</b>。</p>
-        </article>
-        <article class="path reveal">
-          <span class="p-tag">渠道</span>
-          <h3>校园</h3>
-          <p>心理中心、辅导员、社团、新生礼包。一个人替一群人装，获客成本最低，也最容易验证留存。</p>
-        </article>
-        <article class="path reveal">
-          <span class="p-tag">后面</span>
-          <h3>小团队</h3>
-          <p>HR 的入职清单、项目组的周任务、工作室的排期。从 20 人以内的团队开始，先证明「别人也愿意让它替自己记事」。</p>
-        </article>
-      </div>
-
-      <div class="moat reveal">
-        <h3>为什么是我们</h3>
-        <ul>
-          <li><b>中文时间解析的语料。</b>「下周三之前」「月底前」「下下周」——这些说法我们踩了一个月的坑，规则库是攒出来的，不是调出来的。</li>
-          <li><b>不评判的语气。</b>没有「逾期 3 天」，只有「顺延」；按钮不叫完成，叫「开始 5 分钟」。这是产品设定，也是别人抄不动的部分。</li>
-          <li><b>本地优先。</b>待办里有体检报告和报销单。数据默认只在你手机里，同步要显式打开。</li>
-        </ul>
-      </div>
+    <div class="moat reveal">
+      <b>为什么是我们</b>
+      <span>数据只存在本地</span><span>模型可选、Key 自持</span><span>入口只有一个</span><span>5 天 37 个版本，用户测出来的，不是想出来的</span>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ══════════ 08 接下来 ══════════ -->
-  <section class="ch alt" id="s08" data-title="接下来"
-    data-note="【30 秒】三件事，每件一句话。重点是最后一句：现在能用的已经能用，接下来是让它「不用打开也能用」。">
-    <div class="wrap">
-      <div class="ch-head reveal">
-        <span class="num">08</span>
-        <p class="kicker">接下来</p>
-      </div>
-      <h2 class="reveal">接下来<em>三件事。</em></h2>
+<!-- ══════════ 15 接下来 ══════════ -->
+<section class="slide" id="s15" data-title="接下来"
+  data-note="【30 秒】三件事，一句话一件。真的能在锁屏上叫你、真的认识「下周三之前」、真的能在你发微信的时候接住一句话。收口：现在这版已经能装到主屏、离线可用、锁屏能弹通知——它缺的不是功能，是让更多人今天就用上第一件。">
+  <div class="wrap">
+    <p class="kicker reveal">14　接下来</p>
+    <h2 class="reveal">接下来<em>三件事</em>。</h2>
 
-      <div class="next">
-        <article class="next-item reveal">
-          <span class="n-i">i</span>
-          <h3>真的能在锁屏上叫你</h3>
-          <p>现在是网页 + PWA，靠系统通知。下一步是原生壳 + 服务端推送——App 被系统杀掉之后，闹钟还得响。</p>
-        </article>
-        <article class="next-item reveal">
-          <span class="n-i">ii</span>
-          <h3>真的认识「下周三之前」</h3>
-          <p>规则打底，小模型兜底。中文里模糊的时间表达太多，规则库覆盖八成，剩下的交给模型判断。</p>
-        </article>
-        <article class="next-item reveal">
-          <span class="n-i">iii</span>
-          <h3>真的在你用微信的时候接住一句话</h3>
-          <p>系统级入口：分享一张截图、转发一条群通知，直接变成待办。这是「不用打开也能用」的终点。</p>
-        </article>
-      </div>
-
-      <p class="closing-line reveal">现在这版已经能装在手机主屏上、离线可用、锁屏能弹通知。<br>它缺的不是功能，是让更多人<b>今天就开始用第一件</b>。</p>
+    <div class="notes3">
+      <div class="next reveal"><b>真的能在锁屏上叫你</b><p>现在是网页 + PWA，靠 Service Worker 通知。下一步是原生壳 + 服务端推送——App 被系统杀掉之后，闹钟还得响。</p></div>
+      <div class="next reveal"><b>真的认识「下周三之前」</b><p>规则打底，小模型兜底。中文里模糊的时间表达太多，规则库覆盖八成，剩下的交给模型判断。</p></div>
+      <div class="next reveal"><b>真的能在你发微信时接住一句话</b><p>系统级入口：分享一张截图、转发一条群通知，直接变成待办。这是「不用打开也能用」的终点。</p></div>
     </div>
-  </section>
 
-  <!-- ══════════ 09 结尾 ══════════ -->
-  <section class="ch end" id="s09" data-title="结尾"
-    data-note="【收尾 20 秒】回到开场那个人。不要总结，不要说「感谢聆听」。就说这一句：如果这一小步能让你今晚就开始——它就成立了。说完停住，屏幕留在这一页，等第一个问题。">
-    <div class="wrap narrow center">
-      <img class="end-mascot reveal" src="assets/mascot-front.png" alt="">
-      <p class="end-line reveal">如果这一小步，<br>能让你今晚就动手，<br>做那件拖了很久的事——<br><em>它就成立了。</em></p>
-      <div class="end-cta reveal">
-        <a class="btn big" href="https://x1038604972-web.github.io/xiaobu-reminder/" target="_blank" rel="noopener">现在就试</a>
-        <a class="btn ghost big" href="https://x1038604972-web.github.io/xiaobu-reminder/process/" target="_blank" rel="noopener">看完整过程</a>
-      </div>
-      <p class="end-foot reveal">轻记 · 小步 ｜ 2026.11 ｜ 五天 · 37 个版本 · 13 条指令 · 12 条反馈</p>
+    <div class="pull reveal">
+      <p>现在这版已经能装在手机主屏上、离线可用、锁屏能弹通知。</p>
+      <small>它缺的不是功能，是让更多人今天就用上第一件。</small>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- ══════════ 16 结尾 ══════════ -->
+<section class="slide end" id="s16" data-title="结尾"
+  data-note="【20 秒】不讲总结。念完那四行，停三秒，然后说：谢谢。不要把「谢谢观赏」放上去。">
+  <div class="wrap end-wrap">
+    <img class="end-mascot reveal" src="assets/mascot-front.png" alt="小布">
+    <p class="end-text reveal">如果这一小步，<br>能让你今晚就动手，<br>做那件拖了很久的事——<br><em>它就成立了。</em></p>
+    <div class="end-actions reveal">
+      <a class="btn solid" href="#s09">现在试一下</a>
+      <a class="btn ghost" href="demo/index.html" target="_blank" rel="noopener">在新窗口打开 App ↗</a>
+    </div>
+    <p class="end-meta reveal">轻记 · 小步 ｜ 2026.11 ｜ 5 天 · 37 个版本 · 42 份问卷 · 6 位深访 · 5 位用户测试</p>
+  </div>
+</section>
 
 </main>
 
 <!-- 讲稿抽屉 -->
 <aside class="notes" id="notes" aria-hidden="true">
-  <div class="notes-head">
-    <h2>讲稿 <span>· 约 8 分钟</span></h2>
-    <button class="btn ghost small" id="notesClose" type="button">收起</button>
-  </div>
+  <header><b>讲稿</b><span>约 8 分钟</span><button id="notesClose" type="button">收起</button></header>
   <div class="notes-body" id="notesBody"></div>
-  <p class="notes-tip">← → 切换章节 · N 开关讲稿 · P 演讲模式</p>
 </aside>
 
-<!-- 演讲模式控制条 -->
-<div class="present-bar" id="presentBar" aria-hidden="true">
-  <button class="pb-btn" id="pbPrev" type="button" aria-label="上一节">←</button>
-  <span class="pb-count"><b id="pbNow">1</b> / <em id="pbAll">9</em></span>
-  <button class="pb-btn" id="pbNext" type="button" aria-label="下一节">→</button>
+<!-- 演示模式底栏 -->
+<div class="present-bar" id="presentBar">
+  <button id="pbPrev" type="button" aria-label="上一节">←</button>
+  <span class="pb-count"><b id="pbNow">1</b><i>/</i><span id="pbAll">16</span></span>
+  <button id="pbNext" type="button" aria-label="下一节">→</button>
   <span class="pb-sep"></span>
-  <button class="pb-btn wide" id="pbNotes" type="button">讲稿</button>
-  <button class="pb-btn wide" id="pbExit" type="button">退出</button>
+  <button id="pbNotes" type="button">讲稿</button>
+  <button id="pbExit" type="button">退出</button>
 </div>
 
 <script src="app.js"></script>

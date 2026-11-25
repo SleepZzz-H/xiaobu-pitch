@@ -1,281 +1,226 @@
-﻿/* 小步 · 演讲站 —— 交互 */
+/* 小步 · 演讲站 —— 翻页、讲稿、演示模式、封面动效、操作影片 */
 (() => {
-  'use strict';
-
   const $ = (s, r = document) => r.querySelector(s);
-  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const slides = $$('.slide');
+  const total = slides.length;
+  const slidesEl = $('#slides');
 
-  const sections = [$('#hero'), ...$$('main .ch')].filter(Boolean);
-
-  /* ─────────── 章节导航 ─────────── */
+  /* ───────── 章节点 + 页码 ───────── */
   const rail = $('#rail');
-  sections.forEach((sec, i) => {
+  slides.forEach((s, i) => {
     const a = document.createElement('a');
-    a.href = '#' + (sec.id || 'top');
-    a.innerHTML = `<span>${sec.dataset.title || ''}</span><i></i>`;
-    a.dataset.i = i;
+    a.href = '#' + s.id;
+    a.innerHTML = `<span>${s.dataset.title || i + 1}</span><i></i>`;
+    a.addEventListener('click', (e) => { e.preventDefault(); go(i); });
     rail.appendChild(a);
   });
-  const railLinks = $$('a', rail);
+  const railLinks = $$('#rail a');
+  $('#pagerAll').textContent = total;
+  $('#pbAll').textContent = total;
 
-  /* ─────────── 入场动画 ─────────── */
+  /* ───────── 当前页 ───────── */
+  let current = -1;
+  function setCurrent(i) {
+    if (i === current) return;
+    current = i;
+    railLinks.forEach((a, k) => a.classList.toggle('on', k === i));
+    $$('.note-item').forEach((n, k) => n.classList.toggle('active', k === i));
+    $('#pagerNow').textContent = i + 1;
+    $('#pbNow').textContent = i + 1;
+    $('#progBar').style.width = ((i + 1) / total * 100).toFixed(2) + '%';
+    document.title = `${(slides[i]?.dataset.title || '')} · 小步`;
+  }
+
   const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) setCurrent(slides.indexOf(e.target)); });
+  }, { threshold: 0.55 });
+  slides.forEach((s) => io.observe(s));
+
+  /* ───────── 翻页 ───────── */
+  function go(i) {
+    i = Math.max(0, Math.min(total - 1, i));
+    slides[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  const next = () => go(current + 1);
+  const prev = () => go(current - 1);
+
+  // 点一下翻一页（避开交互元素）
+  slides.forEach((s) => {
+    s.addEventListener('click', (e) => {
+      if (e.target.closest('a,button,input,textarea,.notes,.present-bar,.film')) return;
+      if (window.getSelection().toString()) return;
+      next();
+    });
+  });
+
+  // 平滑滚一次（键盘/按钮用）
+  let wheelLock = 0;
+  slidesEl.addEventListener('wheel', (e) => {
+    if (window.innerWidth <= 980) return;
+    if (Math.abs(e.deltaY) < 12) return;
+    const now = Date.now();
+    if (now < wheelLock) { return; }
+    const el = slidesEl;
+    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 4;
+    const atTop = el.scrollTop <= 2;
+    if ((e.deltaY > 0 && atBottom) || (e.deltaY < 0 && atTop)) return;
+    // 让浏览器原生 snap 处理，只加一点锁，避免一次滚好几页
+    wheelLock = now + 620;
+  }, { passive: true });
+
+  document.addEventListener('keydown', (e) => {
+    const k = e.key;
+    if (k === 'Escape') {
+      if ($('#notes').classList.contains('open')) return toggleNotes(false);
+      if (document.body.classList.contains('present')) return setPresent(false);
+    }
+    if (k === 'n' || k === 'N') return toggleNotes();
+    if (k === 'p' || k === 'P') return setPresent(!document.body.classList.contains('present'));
+    if (k === 'f' || k === 'F') return toggleFull();
+    if (k === 'ArrowDown' || k === 'PageDown' || k === ' ' || k === 'ArrowRight') { e.preventDefault(); return next(); }
+    if (k === 'ArrowUp' || k === 'PageUp' || k === 'ArrowLeft') { e.preventDefault(); return prev(); }
+    if (k === 'Home') { e.preventDefault(); return go(0); }
+    if (k === 'End') { e.preventDefault(); return go(total - 1); }
+  });
+
+  // 触屏横滑
+  let touchX = 0, touchY = 0;
+  document.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (window.innerWidth > 980) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    const dy = e.changedTouches[0].clientY - touchY;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? next : prev)();
+  }, { passive: true });
+
+  /* ───────── 入场 ───────── */
+  const rio = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (!e.isIntersecting) return;
+      const sibs = [...e.target.parentElement.children].filter((n) => n.classList.contains('reveal'));
+      const i = sibs.indexOf(e.target);
+      e.target.style.transitionDelay = Math.max(0, Math.min(i, 6)) * 70 + 'ms';
       e.target.classList.add('in');
-      io.unobserve(e.target);
+      rio.unobserve(e.target);
     });
-  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  $$('.reveal').forEach((el) => rio.observe(el));
 
-  $$('.reveal').forEach((el) => {
-    if (!el.style.getPropertyValue('--d')) {
-      const sibs = Array.from(el.parentElement.children).filter((c) => c.classList.contains('reveal'));
-      const k = sibs.indexOf(el);
-      el.style.setProperty('--d', Math.min(k, 4) * 70 + 'ms');
-    }
-    io.observe(el);
-  });
-
-  /* ─────────── 进度条 / 当前章节 ─────────── */
-  const bar = $('#progressBar');
-  let current = -1;
-
-  function onScroll() {
-    const h = document.documentElement;
-    const max = h.scrollHeight - innerHeight;
-    const p = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
-    bar.style.width = (p * 100).toFixed(2) + '%';
-
-    const y = scrollY + innerHeight * 0.36;
-    let idx = 0;
-    sections.forEach((s, i) => { if (s.offsetTop <= y) idx = i; });
-    if (idx !== current) {
-      current = idx;
-      railLinks.forEach((a, i) => a.classList.toggle('on', i === idx));
-      $$('.note-item').forEach((n, i) => n.classList.toggle('active', i === idx));
-      const sec = sections[idx];
-      document.body.classList.toggle('on-dark', !!sec && (sec.classList.contains('dark') || sec.classList.contains('end')));
-      const now = $('#pbNow');
-      if (now) now.textContent = idx + 1;
-    }
-  }
-  addEventListener('scroll', onScroll, { passive: true });
-  addEventListener('resize', onScroll);
-  onScroll();
-
-  /* ─────────── 37 个版本格 ─────────── */
-  const grid = $('#grid37');
-  if (grid) {
-    const key = new Set([0, 6, 12, 18, 27, 36]);
-    for (let i = 0; i < 37; i++) {
-      const b = document.createElement('i');
-      const hgt = 18 + Math.round(Math.abs(Math.sin(i * 1.7) * 46 + Math.cos(i * 0.9) * 22) + (i / 37) * 26);
-      b.style.height = hgt + 'px';
-      if (key.has(i)) b.className = 'k';
-      b.title = `第 ${i + 1} 个备份`;
-      grid.appendChild(b);
-    }
-  }
-
-  /* ─────────── 首屏：一句话被拆开 ─────────── */
-  const typed = $('#typed');
-  const card = $('#mockCard');
-  const chips = $$('#cardChips .chip');
-  const titleEl = $('#cardTitle');
-  const startBtn = $('.mock-start');
-  const ringOn = $('.ring circle.on');
-  const ringTxt = $('#ringTxt');
-
-  const TEXT = '明天下午三点提醒我给导师发开题报告，大概一个半小时，很重要';
-  const TRIGGERS = [[6, 0], [25, 1], [29, 2]]; // 打字到第几个字时弹出第几颗胶囊
-
-  function resetHero() {
-    typed.textContent = '';
-    card.classList.add('out');
-    chips.forEach((c) => c.classList.remove('in'));
-    titleEl.style.opacity = 0;
-    startBtn.style.opacity = 0;
-    startBtn.style.transform = 'translateY(6px)';
-    ringOn.style.strokeDashoffset = 113;
-    ringTxt.textContent = '0';
-  }
-
-  async function playHero() {
-    resetHero();
-    await sleep(420);
-    card.classList.remove('out');
-
-    const shown = new Set();
-    for (let i = 1; i <= TEXT.length; i++) {
-      typed.textContent = TEXT.slice(0, i);
-      if (i === 1) {
-        titleEl.style.transition = 'opacity .5s';
-        titleEl.style.opacity = 1;
-      }
-      for (const [at, idx] of TRIGGERS) {
-        if (i >= at && !shown.has(idx)) {
-          shown.add(idx);
-          chips[idx].classList.add('in');
-        }
-      }
-      await sleep(58 + Math.random() * 26);
-    }
-
-    await sleep(380);
-    startBtn.style.transition = 'opacity .45s, transform .45s cubic-bezier(.22,.61,.36,1)';
-    startBtn.style.opacity = 1;
-    startBtn.style.transform = 'none';
-    ringOn.style.transition = 'stroke-dashoffset 1.1s cubic-bezier(.22,.61,.36,1)';
-    ringOn.style.strokeDashoffset = 75;
-    ringTxt.textContent = '1';
-
-    await sleep(3600);
-    resetHero();
-    await sleep(700);
-  }
-
-  if (typed) {
-    if (reduce) {
-      typed.textContent = TEXT;
-      card.classList.remove('out');
-      chips.forEach((c) => c.classList.add('in'));
-      titleEl.style.opacity = 1;
-      startBtn.style.opacity = 1;
-      startBtn.style.transform = 'none';
-      ringOn.style.strokeDashoffset = 75;
-      ringTxt.textContent = '1';
-    } else {
-      (async function loop() {
-        for (;;) {
-          await playHero();
-        }
-      })();
-    }
-  }
-
-  /* ─────────── 在线演示 iframe ─────────── */
-  const frame = $('#appFrame');
-  const loading = $('#phoneLoading');
-  if (frame) {
-    const LIVE = 'https://x1038604972-web.github.io/xiaobu-reminder/';
-    let loaded = false;
-
-    // 同源时替观众点掉登录页与新手导览，直接落到任务列表
-    const autoEnter = (tries = 0) => {
-      let doc = null;
-      try { doc = frame.contentDocument; } catch (_) { return; }
-      if (!doc || !doc.body) { if (tries < 50) setTimeout(() => autoEnter(tries + 1), 260); return; }
-
-      const vis = (el) => !!el && el.getClientRects().length > 0;
-      const skip = doc.getElementById('loginSkip');
-      if (vis(skip)) { skip.click(); setTimeout(() => autoEnter(tries + 1), 320); return; }
-
-      const tourSkip = Array.from(doc.querySelectorAll('button,a'))
-        .find((el) => vis(el) && (el.textContent || '').trim() === '跳过');
-      if (tourSkip) { tourSkip.click(); setTimeout(() => autoEnter(tries + 1), 320); return; }
-
-      if (tries < 50) setTimeout(() => autoEnter(tries + 1), 260);
-    };
-
-    const arm = () => {
-      if (arm.done) return;
-      arm.done = true;
-      frame.src = frame.dataset.src;
-      frame.addEventListener('load', () => {
-        loaded = true;
-        frame.classList.add('ready');
-        loading && loading.classList.add('hide');
-        autoEnter();
-      });
-      setTimeout(() => {
-        if (loaded) return;
-        if (loading) loading.innerHTML = '<p style="max-width:15em">预览加载得有点慢。<br>可以直接<a href="' +
-          LIVE + '" target="_blank" rel="noopener" style="color:#B94F2E">在新窗口打开</a>。</p>';
-      }, 9000);
-    };
-    const io2 = new IntersectionObserver((es) => {
-      es.forEach((e) => { if (e.isIntersecting) { arm(); io2.disconnect(); } });
-    }, { rootMargin: '1200px' });
-    io2.observe(frame.closest('.phone'));
-  }
-
-  /* ─────────── 讲稿抽屉 ─────────── */
-  const notes = $('#notes');
-  const notesBody = $('#notesBody');
-  sections.forEach((sec, i) => {
-    if (!sec.dataset.note) return;
+  /* ───────── 讲稿 ───────── */
+  const notes = $('#notes'), notesBody = $('#notesBody');
+  slides.forEach((s, i) => {
     const d = document.createElement('div');
     d.className = 'note-item';
-    d.dataset.i = i;
-    d.innerHTML = `<h3>${sec.dataset.title || ''} <button type="button" data-go="${i}">看这一节 ↑</button></h3><p>${sec.dataset.note}</p>`;
+    d.innerHTML = `<h4>${String(i + 1).padStart(2, '0')}　${s.dataset.title || ''}</h4><p>${s.dataset.note || ''}</p>`;
+    d.addEventListener('click', () => { go(i); toggleNotes(false); });
     notesBody.appendChild(d);
   });
-  notesBody.addEventListener('click', (e) => {
-    const b = e.target.closest('[data-go]');
-    if (!b) return;
-    sections[+b.dataset.go].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-  });
+  const foot = document.createElement('p');
+  foot.className = 'notes-foot';
+  foot.textContent = '← → 或空格翻页　·　N 开关讲稿　·　P 演讲模式　·　F 全屏';
+  notesBody.appendChild(foot);
 
-  const toggleNotes = (force) => {
-    const open = force !== undefined ? force : !notes.classList.contains('open');
+  function toggleNotes(force) {
+    const open = force === undefined ? !notes.classList.contains('open') : force;
     notes.classList.toggle('open', open);
     notes.setAttribute('aria-hidden', String(!open));
-  };
+  }
   $('#notesBtn').addEventListener('click', () => toggleNotes());
   $('#notesClose').addEventListener('click', () => toggleNotes(false));
   $('#pbNotes').addEventListener('click', () => toggleNotes());
 
-  /* ─────────── 演讲模式 ─────────── */
-  const body = document.body;
-  const go = (i) => {
-    const s = sections[Math.max(0, Math.min(sections.length - 1, i))];
-    if (s) s.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-  };
-  const setPresent = (on) => {
-    body.classList.toggle('present', on);
-    $('#presentBar').setAttribute('aria-hidden', String(!on));
-    $('#presentBtn').textContent = on ? '退出演讲' : '演讲模式';
-    if (on) {
-      $('#pbAll').textContent = sections.length;
-      setTimeout(() => go(current < 0 ? 0 : current), 60);
-    }
-  };
-  $('#presentBtn').addEventListener('click', () => setPresent(!body.classList.contains('present')));
+  /* ───────── 演示模式 ───────── */
+  function setPresent(on) {
+    document.body.classList.toggle('present', on);
+    if (on && !document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {});
+  }
+  $('#presentBtn').addEventListener('click', () => setPresent(true));
   $('#pbExit').addEventListener('click', () => setPresent(false));
-  $('#pbNext').addEventListener('click', () => go(current + 1));
-  $('#pbPrev').addEventListener('click', () => go(current - 1));
+  $('#pbPrev').addEventListener('click', prev);
+  $('#pbNext').addEventListener('click', next);
 
-  addEventListener('keydown', (e) => {
-    const tag = (e.target.tagName || '').toLowerCase();
-    if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
+  function toggleFull() {
+    if (document.fullscreenElement) document.exitFullscreen?.();
+    else document.documentElement.requestFullscreen?.().catch(() => {});
+  }
 
-    if (e.key === 'p' || e.key === 'P') { e.preventDefault(); setPresent(!body.classList.contains('present')); return; }
-    if (e.key === 'n' || e.key === 'N') { e.preventDefault(); toggleNotes(); return; }
-    if (e.key === 'Escape') { toggleNotes(false); if (body.classList.contains('present')) setPresent(false); return; }
+  /* ───────── 封面打字 ───────── */
+  const typed = $('#typed'), chips = $$('#cardChips .chip'), card = $('#mockCard'),
+        startBtn = $('.mock-start'), ringFg = $('#ringFg'), ringNum = $('#ringNum');
+  const TEXT = '明天下午三点提醒我给导师发开题报告，大概一个半小时，很重要';
+  const TRIGGERS = [[6, 0], [25, 1], [29, 2]];
+  let ti = 0, raf = null, alive = true;
 
-    if (!body.classList.contains('present')) return;
-    const next = ['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'];
-    const prev = ['ArrowLeft', 'ArrowUp', 'PageUp'];
-    if (next.includes(e.key)) { e.preventDefault(); go(current + 1); }
-    else if (prev.includes(e.key)) { e.preventDefault(); go(current - 1); }
-    else if (e.key === 'Home') { e.preventDefault(); go(0); }
-    else if (e.key === 'End') { e.preventDefault(); go(sections.length - 1); }
-    else if (e.key === 'f' || e.key === 'F') {
-      e.preventDefault();
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {});
-      else document.exitFullscreen?.();
+  function resetHero() {
+    if (!typed) return;
+    typed.textContent = '';
+    card.classList.remove('show');
+    chips.forEach((c) => c.classList.remove('on'));
+    startBtn.classList.remove('on');
+    ringFg.style.strokeDashoffset = '113';
+    ringNum.textContent = '0';
+    ti = 0;
+  }
+  function typeHero() {
+    if (!alive) return;
+    if (ti <= TEXT.length) {
+      typed.textContent = TEXT.slice(0, ti);
+      TRIGGERS.forEach(([at, k]) => { if (ti === at && chips[k]) chips[k].classList.add('on'); });
+      ti++;
+      raf = setTimeout(typeHero, 62);
+    } else {
+      card.classList.add('show');
+      setTimeout(() => startBtn.classList.add('on'), 320);
+      setTimeout(() => { ringFg.style.strokeDashoffset = '75'; ringNum.textContent = '1'; }, 520);
+      setTimeout(() => { resetHero(); raf = setTimeout(typeHero, 400); }, 5200);
     }
-  });
+  }
+  if (typed) { raf = setTimeout(typeHero, 700); }
+  document.addEventListener('visibilitychange', () => { alive = !document.hidden; });
 
-  /* 触屏：左右滑动翻节（演讲模式） */
-  let tx = 0, ty = 0;
-  addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
-  addEventListener('touchend', (e) => {
-    if (!body.classList.contains('present')) return;
-    const dx = e.changedTouches[0].clientX - tx;
-    const dy = e.changedTouches[0].clientY - ty;
-    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.6) go(current + (dx < 0 ? 1 : -1));
-  }, { passive: true });
+  /* ───────── 操作影片 ───────── */
+  const film = $('#film');
+  if (film) {
+    const a = $('.film-a', film), b = $('.film-b', film),
+          prog = $('#filmProg'), toggle = $('#filmToggle');
+    let frames = [], idx = 0, timer = null, playing = true, showingA = true, ms = 260;
+
+    const useFrames = (list, dur) => {
+      frames = list; ms = dur || 260;
+      idx = 0; a.src = frames[0]; a.classList.add('on'); b.classList.remove('on');
+      play();
+    };
+
+    const tick = () => {
+      if (!playing || frames.length < 2) return;
+      idx = (idx + 1) % frames.length;
+      const showEl = showingA ? b : a, hideEl = showingA ? a : b;
+      showEl.src = frames[idx];
+      showEl.classList.add('on');
+      hideEl.classList.remove('on');
+      showingA = !showingA;
+      prog.style.width = ((idx + 1) / frames.length * 100).toFixed(1) + '%';
+    };
+    const play = () => { clearInterval(timer); if (frames.length > 1) timer = setInterval(tick, ms); playing = true; toggle.textContent = '暂停'; };
+    const pause = () => { clearInterval(timer); playing = false; toggle.textContent = '播放'; };
+
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); playing ? pause() : play(); });
+
+    fetch('assets/flow/manifest.json', { cache: 'no-cache' })
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((m) => {
+        const list = (m.frames || []).map((f) => 'assets/flow/' + f);
+        // 预加载
+        let loaded = 0;
+        list.forEach((src) => { const im = new Image(); im.onload = im.onerror = () => { if (++loaded === list.length) useFrames(list, m.ms); }; im.src = src; });
+        if (!list.length) throw new Error('empty');
+      })
+      .catch(() => { /* 没有影片就用静态首页截图 */ });
+
+    const fio = new IntersectionObserver((es) => {
+      es.forEach((e) => { if (e.isIntersecting && playing) play(); else if (!e.isIntersecting) clearInterval(timer); });
+    }, { threshold: 0.25 });
+    fio.observe(film);
+  }
 })();
